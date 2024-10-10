@@ -1,9 +1,7 @@
 {
     "name": "External",
     "rootNamespace": "",
-    "references": [
-        "DOTween.Modules"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
