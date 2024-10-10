@@ -13,5 +13,74 @@ MonoBehaviour:
   m_Name: vHierarchy Data
   m_EditorClassIdentifier: 
   sceneDatasByGuid:
-    keys: []
-    values: []
+    keys:
+    - 348f51f40abc2e640b1b9a3d909fc53b
+    - 8c9cfa26abfee488c85f1582747f6a02
+    values:
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []
+    - goDatasByGlobalId:
+        keys:
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-332472058-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-941179829-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1735590848-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-803050823-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1269028310-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-552556335-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-686728591-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1739582507-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1027630654-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-853260997-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-519420028-0
+        values:
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+      goDatasByInstanceId:
+        keys: 8a7c0000b47c0000c27c0000ac7c0000be7c0000987c0000a27c0000c67c0000b87c0000b07c00008e7c0000
+        values:
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon

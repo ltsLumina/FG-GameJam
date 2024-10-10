@@ -77,3 +77,4 @@ crashlytics-build.properties
 # User settings
 [Uu]ser[Ss]ettings/*
 [Uu]ser[Ss]ettings/EditorUserSettings.asset # This file often causes merge conflicts so it's best to comment it out. - If you need it for whatever reason, simply uncomment it.
+Assets/_Project/External/Editor Enhancements/vHierarchy/vHierarchy Data.asset
