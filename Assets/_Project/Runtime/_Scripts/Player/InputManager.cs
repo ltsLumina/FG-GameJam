@@ -1,17 +1,16 @@
-#region
 using UnityEngine;
 using UnityEngine.InputSystem;
-#endregion
 
-public class InputManager : MonoBehaviour
+public partial class Player // InputManager
 {
     PlayerInput playerInput;
 
     public Vector2 MoveInput { get; private set; }
+    public Vector2 MoveInputRaw { get; private set; }
 
     void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponentInChildren<PlayerInput>();
         Debug.Assert(playerInput != null, "Player Input component not found.");
     }
 
@@ -19,11 +18,31 @@ public class InputManager : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        MoveInput = context.ReadValue<Vector2>();
-
         //Logger.Log("Move Vector: " + MoveInput);
+        MoveInputRaw = context.ReadValue<Vector2>();
+        MoveInput = MoveInputRaw.normalized;
     }
 
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            anim.SetTrigger("jump");
+
+            if (coll.onGround) Jump(Vector2.up, false);
+            if (coll.onWall && !coll.onGround) WallJump();
+        }
+    }
+    
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        float xRaw = MoveInputRaw.x;
+        float yRaw = MoveInputRaw.y;
+
+        if (!context.performed || hasDashed) return;
+        if (xRaw != 0 || yRaw != 0) Dash(xRaw, yRaw);
+    }
+    
     // -- UI Input Actions --
 
     /// <summary>
@@ -33,9 +52,6 @@ public class InputManager : MonoBehaviour
     /// <param name="context"></param>
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            GameManager.TogglePause();
-        }
+        if (context.performed) GameManager.TogglePause();
     }
 }

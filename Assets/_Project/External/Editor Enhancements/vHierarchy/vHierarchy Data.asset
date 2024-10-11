@@ -36,6 +36,8 @@ MonoBehaviour:
         - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-519420028-0
         - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-686728591-0
         - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-332472058-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1513159774-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1517527078-0
         values:
         - iColor: 0
           icon: Camera Icon
@@ -55,12 +57,16 @@ MonoBehaviour:
           icon: d_eyeDropper.sml
         - iColor: 0
           icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
         - iColor: 0
           icon: d_eyeDropper.sml
         - iColor: 0
           icon: d_eyeDropper.sml
       goDatasByInstanceId:
-        keys: 66f7000058f7000062f7000050f700004cf700005ef7000054f7000038f700002ef7000042f700002af70000
+        keys: c07b0000b07b0000bc7b0000a87b0000a47b0000b87b0000ac7b0000907b0000867b00009a7b0000827b0000fcf0ffff20efffff
         values:
         - iColor: 0
           icon: Camera Icon
@@ -80,6 +86,10 @@ MonoBehaviour:
           icon: d_eyeDropper.sml
         - iColor: 0
           icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
         - iColor: 0
           icon: d_eyeDropper.sml
         - iColor: 0
