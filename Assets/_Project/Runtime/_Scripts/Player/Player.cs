@@ -9,9 +9,8 @@ using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour
 {
-    Collision coll;
-    Rigidbody2D rb;
-    AnimationScript anim;
+    [Header("Spawn Point")]
+    [SerializeField] Vector2 spawnPoint;
 
     [Space, Header("Stats")]
     [SerializeField] float speed = 10f;
@@ -25,7 +24,6 @@ public partial class Player : MonoBehaviour
 
     [Space, Header("Coyote Time")]
     [SerializeField] float coyoteTimeDuration = 0.2f;
-    float coyoteTimeTimer;
 
     [Space, Header("Booleans")]
     [SerializeField, ReadOnly] bool canMove;
@@ -38,7 +36,7 @@ public partial class Player : MonoBehaviour
     [SerializeField, ReadOnly] bool isDashing;
     [SerializeField, ReadOnly] bool groundTouch;
     [SerializeField, ReadOnly] bool hasDashed;
-    
+
     /// <summary>
     /// 1 == right, -1 == left
     /// </summary>
@@ -49,37 +47,22 @@ public partial class Player : MonoBehaviour
     [SerializeField] ParticleSystem jumpParticle;
     [SerializeField] ParticleSystem slideParticle;
     [SerializeField] ParticleSystem wallJumpParticle;
+    AnimationScript anim;
+    Collision coll;
+    float coyoteTimeTimer;
 
-    #region Properties
-    public bool CanMove => canMove;
-    public bool WallGrab => wallGrab;
-    public bool WallJumped => wallJumped;
-    public bool WallSlide => wallSlide;
-    public bool IsDashing => isDashing;
-    #endregion
+    bool onGUI;
+    Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<Collision>();
-        rb   = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<AnimationScript>();
+
+        transform.position = spawnPoint;
     }
-
-    public override string ToString()
-    {
-        string[] strings = 
-        { $"{name} Booleans:",
-          $"Can Move: {canMove}",
-          $"Wall Grab: {wallGrab}",
-          $"Wall Jumped: {wallJumped}",
-          $"Wall Slide: {wallSlide}",
-          $"Is Dashing: {isDashing}" };
-
-        return string.Join("\n", strings);
-    }
-
-    bool onGUI;
 
     // void OnGUI()
     // {
@@ -90,12 +73,12 @@ public partial class Player : MonoBehaviour
     // }
 
     // Update is called once per frame
-    
+
     void Update()
     {
-        float x    = MoveInput.x;
-        float y    = MoveInput.y;
-        var   dir  = new Vector2(x, y);
+        float x = MoveInput.x;
+        float y = MoveInput.y;
+        var dir = new Vector2(x, y);
 
         Walk(dir);
         anim.SetHorizontalMovement(x, y, rb.velocity.y);
@@ -105,20 +88,20 @@ public partial class Player : MonoBehaviour
         if (coll.OnWall && dashAction.WasReleasedThisFrame() && canMove)
         {
             if (facing != coll.WallFacing) anim.Flip(facing * -1);
-            wallGrab  = true;
+            wallGrab = true;
             wallSlide = false;
         }
 
         if (dashAction.WasReleasedThisFrame() || !coll.OnWall || !canMove)
         {
-            wallGrab  = false;
+            wallGrab = false;
             wallSlide = false;
         }
 
         if (coll.OnGround)
         {
             coyoteTimeTimer = coyoteTimeDuration;
-            coyote         = true;
+            coyote = true;
         }
         else
         {
@@ -177,6 +160,33 @@ public partial class Player : MonoBehaviour
         }
     }
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(spawnPoint, new (1, 1, 1));
+    }
+
+    void OnValidate()
+    {
+        // Set the spawnPoint position to the X value, but the Y value of a raycast to the ground
+        if (Application.isPlaying) return;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+        spawnPoint = new (spawnPoint.x, hit.point.y + .5f);
+    }
+
+    public override string ToString()
+    {
+        string[] strings =
+        { $"{name} Booleans:",
+          $"Can Move: {canMove}",
+          $"Wall Grab: {wallGrab}",
+          $"Wall Jumped: {wallJumped}",
+          $"Wall Slide: {wallSlide}",
+          $"Is Dashing: {isDashing}" };
+
+        return string.Join("\n", strings);
+    }
+
     void GroundTouch()
     {
         hasDashed = false;
@@ -211,18 +221,18 @@ public partial class Player : MonoBehaviour
         DOVirtual.Float(startDrag, endDrag, .8f, RigidbodyDrag);
 
         dashParticle.Play();
-        rb.gravityScale                       = 0;
+        rb.gravityScale = 0;
         GetComponent<BetterJumping>().enabled = false;
-        wallJumped                            = true;
-        isDashing                             = true;
+        wallJumped = true;
+        isDashing = true;
 
         yield return new WaitForSeconds(.3f);
 
         dashParticle.Stop();
-        rb.gravityScale                       = 3;
+        rb.gravityScale = 3;
         GetComponent<BetterJumping>().enabled = true;
-        wallJumped                            = false;
-        isDashing                             = false;
+        wallJumped = false;
+        isDashing = false;
     }
 
     IEnumerator GroundDash()
@@ -255,10 +265,10 @@ public partial class Player : MonoBehaviour
 
         if (!canMove) return false;
 
-        bool  pushingWall = (rb.velocity.x < 0 && coll.OnLeftWall) || (rb.velocity.x > 0 && coll.OnRightWall);
-        float push        = pushingWall ? 0 : rb.velocity.x;
+        bool pushingWall = (rb.velocity.x < 0 && coll.OnLeftWall) || (rb.velocity.x > 0 && coll.OnRightWall);
+        float push = pushingWall ? 0 : rb.velocity.x;
         rb.velocity = new (push, rb.velocity.y * wallSlideMult);
-        
+
         return true;
     }
 
@@ -275,7 +285,7 @@ public partial class Player : MonoBehaviour
         slideParticle.transform.parent.localScale = new (ParticleSide(), 1, 1);
         ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
 
-        rb.velocity =  new (rb.velocity.x, 0);
+        rb.velocity = new (rb.velocity.x, 0);
         rb.velocity += dir * jumpForce;
 
         particle.Play();
@@ -297,7 +307,7 @@ public partial class Player : MonoBehaviour
         if (wallSlide || (wallGrab && vertical < 0))
         {
             slideParticle.transform.parent.localScale = new (ParticleSide(), 1, 1);
-            main.startColor                           = Color.white;
+            main.startColor = Color.white;
         }
         else { main.startColor = Color.clear; }
     }
@@ -308,9 +318,18 @@ public partial class Player : MonoBehaviour
         return particleSide;
     }
 
-    public void Death()
-    {
+    public void Death() =>
+
         //anim.SetTrigger("death");
-        transform.position = GameManager.Instance.SpawnPoint;
-    }
+        transform.position = SpawnPoint;
+
+    #region Properties
+    public bool CanMove => canMove;
+    public bool WallGrab => wallGrab;
+    public bool WallJumped => wallJumped;
+    public bool WallSlide => wallSlide;
+    public bool IsDashing => isDashing;
+
+    public Vector2 SpawnPoint => spawnPoint;
+    #endregion
 }

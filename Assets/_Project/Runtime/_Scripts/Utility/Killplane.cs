@@ -1,30 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+#region
 using UnityEngine;
+#endregion
 
 [ExecuteAlways]
 public class Killplane : MonoBehaviour
 {
     [SerializeField] float killHeight = -10;
 
-    Transform player;
-    
+    Player player;
+
     void Update()
     {
-        if (!player) player = FindObjectOfType<Player>().transform;
-        
-        if (player.position.y < killHeight)
+        if (!player) player = FindObjectOfType<Player>();
+
+        if (player.transform.position.y < killHeight)
         {
             if (Application.isPlaying)
             {
                 Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
-                player.position = GameManager.Instance.SpawnPoint;
+                player.transform.position = player.SpawnPoint;
             }
-            else if (Application.isEditor)
-            {
-                player.position = GameManager.Instance.SpawnPoint;
-            }
+            else if (Application.isEditor) { player.transform.position = player.SpawnPoint; }
         }
     }
 }

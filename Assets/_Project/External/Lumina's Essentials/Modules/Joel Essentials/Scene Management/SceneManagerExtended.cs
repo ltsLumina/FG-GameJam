@@ -7,39 +7,27 @@ using UnityEngine.SceneManagement;
 
 public static class SceneManagerExtended
 {
-    static int previousScene;
+    public static int ActiveScene => SceneManager.GetActiveScene().buildIndex;
+    public static string ActiveSceneName => SceneManager.GetActiveScene().name;
 
     /// <summary>
     ///     Loads the scene with the specified build index.
     /// </summary>
     /// <param name="buildIndex"></param>
-    public static void LoadScene(int buildIndex)
-    {
-        previousScene = SceneManager.GetActiveScene().buildIndex;
-
-        SceneManager.LoadScene(ClampBuildIndex(buildIndex));
-    }
+    public static void LoadScene(int buildIndex) => SceneManager.LoadScene(ClampBuildIndex(buildIndex));
 
     /// <summary>
     ///     Reloads the currently active scene.
     /// </summary>
-    public static void ReloadScene() {
+    public static void ReloadScene()
+    {
         if (Application.isPlaying) SceneManager.LoadScene(ClampBuildIndex(SceneManager.GetActiveScene().buildIndex));
     }
 
     /// <summary>
     ///     Loads the next scene according to build index order.
     /// </summary>
-    public static void LoadNextScene()
-    {
-        previousScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(ClampBuildIndex(SceneManager.GetActiveScene().buildIndex + 1));
-    }
-
-    /// <summary>
-    ///     Loads the previously loaded scene.
-    /// </summary>
-    public static void LoadPreviousScene() => SceneManager.LoadScene(ClampBuildIndex(previousScene));
+    public static void LoadNextScene() => SceneManager.LoadScene(ClampBuildIndex(SceneManager.GetActiveScene().buildIndex + 1));
 
     /// <summary>
     ///     Asynchronously loads the scene with the specified build index.
