@@ -40,7 +40,10 @@ public partial class Player : MonoBehaviour
     [SerializeField, ReadOnly] bool isDashing;
     [SerializeField, ReadOnly] bool groundTouch;
     [SerializeField, ReadOnly] bool hasDashed;
-
+    
+    /// <summary>
+    /// 1 == right, -1 == left
+    /// </summary>
     [SerializeField, ReadOnly] int facing = 1;
 
     [Space, Header("Polish")]
@@ -66,7 +69,7 @@ public partial class Player : MonoBehaviour
     }
 
     bool onGUI;
-    
+
     // void OnGUI()
     // {
     //     // Draw all the booleans from the inspector on right of the screen
