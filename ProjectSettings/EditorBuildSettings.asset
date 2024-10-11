@@ -6,7 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Template.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/Levels/Tutorial Part 1.unity
+    guid: cdcbe07e1987d564aafd4fef0ccca2bb
+  - enabled: 1
+    path: Assets/Scenes/Levels/Tutorial Part 2.unity
+    guid: 9ada266df219ea44eb500eac51b07c47
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 334d30b88e116e846a47e6c60796c759, type: 2}

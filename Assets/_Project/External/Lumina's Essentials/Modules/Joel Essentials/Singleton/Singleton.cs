@@ -48,6 +48,12 @@ public class SingletonPersistent<T> : MonoBehaviour
     {
         get
         {
+            if (Application.isEditor)
+            {
+                instance = (T) FindObjectOfType(typeof(T));
+                return instance;
+            }
+            
             if (instance == null)
             {
                 Debug.LogError("No object of type " + typeof(T).FullName + " was found.");

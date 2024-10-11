@@ -1,5 +1,4 @@
 ﻿#region
-using System;
 using System.Collections;
 using DG.Tweening;
 using Lumina.Essentials.Attributes;
@@ -15,15 +14,14 @@ public partial class Player : MonoBehaviour
     AnimationScript anim;
 
     [Space, Header("Stats")]
-    [SerializeField] float speed = 10;
-    [SerializeField] float jumpForce = 50;
-#pragma warning disable CS0414 // Field is assigned but its value is never used
-    float UNUSED_slideSpeed = 5;
-#pragma warning restore CS0414 // Field is assigned but its value is never used
-    [SerializeField] float wallJumpLerp = 10;
-    [SerializeField] float dashSpeed = 20;
+    [SerializeField] float speed = 10f;
+    [SerializeField] float jumpForce = 15f;
+    [SerializeField] float wallSlideMult = .95f;
+    [SerializeField] float wallJumpMult = 1.15f;
+    [SerializeField] float wallJumpLerp = 1f;
+    [SerializeField] float dashSpeed = 25f;
     [SerializeField] int startDrag = 5;
-    [SerializeField] int endDrag;
+    [SerializeField] int endDrag = 0;
 
     [Space, Header("Coyote Time")]
     [SerializeField] float coyoteTimeDuration = 0.2f;
@@ -66,6 +64,19 @@ public partial class Player : MonoBehaviour
         coll = GetComponent<Collision>();
         rb   = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<AnimationScript>();
+    }
+
+    public override string ToString()
+    {
+        string[] strings = 
+        { $"{name} Booleans:",
+          $"Can Move: {canMove}",
+          $"Wall Grab: {wallGrab}",
+          $"Wall Jumped: {wallJumped}",
+          $"Wall Slide: {wallSlide}",
+          $"Is Dashing: {isDashing}" };
+
+        return string.Join("\n", strings);
     }
 
     bool onGUI;
@@ -222,20 +233,20 @@ public partial class Player : MonoBehaviour
 
     void WallJump()
     {
-        if ((facing == 1 && coll.OnRightWall) || (facing == -1 && !coll.OnRightWall))
+        if ((coll.OnRightWall && facing == 1) || (coll.OnLeftWall && facing == -1))
         {
             facing *= -1;
             anim.Flip(facing);
+
+            StopCoroutine(DisableMovement(0));
+            StartCoroutine(DisableMovement(.1f));
+
+            Vector2 wallDir = coll.OnRightWall ? Vector2.left : Vector2.right;
+
+            Jump(Vector2.up * wallJumpMult + wallDir / 1.5f, true);
+
+            wallJumped = true;
         }
-
-        StopCoroutine(DisableMovement(0));
-        StartCoroutine(DisableMovement(.1f));
-
-        Vector2 wallDir = coll.OnRightWall ? Vector2.left : Vector2.right;
-
-        Jump(Vector2.up / 1.5f + wallDir / 1.5f, true);
-
-        wallJumped = true;
     }
 
     bool WallSliding()
@@ -246,8 +257,7 @@ public partial class Player : MonoBehaviour
 
         bool  pushingWall = (rb.velocity.x < 0 && coll.OnLeftWall) || (rb.velocity.x > 0 && coll.OnRightWall);
         float push        = pushingWall ? 0 : rb.velocity.x;
-
-        rb.velocity = new (push, rb.velocity.y);
+        rb.velocity = new (push, rb.velocity.y * wallSlideMult);
         
         return true;
     }
@@ -255,7 +265,6 @@ public partial class Player : MonoBehaviour
     void Walk(Vector2 dir)
     {
         if (!canMove) return;
-
         if (wallGrab) return;
 
         rb.velocity = !wallJumped ? new (dir.x * speed, rb.velocity.y) : Vector2.Lerp(rb.velocity, new (dir.x * speed, rb.velocity.y), wallJumpLerp * Time.deltaTime);
@@ -297,5 +306,11 @@ public partial class Player : MonoBehaviour
     {
         int particleSide = coll.OnRightWall ? 1 : -1;
         return particleSide;
+    }
+
+    public void Death()
+    {
+        //anim.SetTrigger("death");
+        transform.position = GameManager.Instance.SpawnPoint;
     }
 }
