@@ -12,4 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Tutorial Part 2.unity
     guid: 9ada266df219ea44eb500eac51b07c47
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: c3b9798f5ea69fa4e9cd40d20a6b98da, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 7a9e9c475f106ee4eb79e55965e94126, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 334d30b88e116e846a47e6c60796c759, type: 2}
