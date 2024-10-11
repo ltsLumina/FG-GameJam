@@ -1,6 +1,9 @@
 ﻿#region
+using System;
 using System.Collections;
 using DG.Tweening;
+using Lumina.Essentials.Attributes;
+using Lumina.Essentials.Modules;
 using UnityEngine;
 using UnityEngine.InputSystem;
 #endregion
@@ -8,37 +11,54 @@ using UnityEngine.InputSystem;
 public partial class Player : MonoBehaviour
 {
     Collision coll;
-    [HideInInspector]
-    public Rigidbody2D rb;
+    Rigidbody2D rb;
     AnimationScript anim;
 
     [Space, Header("Stats")]
-    public float speed = 10;
-    public float jumpForce = 50;
-    public float slideSpeed = 5;
-    public float wallJumpLerp = 10;
-    public float dashSpeed = 20;
+    [SerializeField] float speed = 10;
+    [SerializeField] float jumpForce = 50;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
+    float UNUSED_slideSpeed = 5;
+#pragma warning restore CS0414 // Field is assigned but its value is never used
+    [SerializeField] float wallJumpLerp = 10;
+    [SerializeField] float dashSpeed = 20;
     [SerializeField] int startDrag = 5;
     [SerializeField] int endDrag;
 
+    [Space, Header("Coyote Time")]
+    [SerializeField] float coyoteTimeDuration = 0.2f;
+    float coyoteTimeTimer;
+
     [Space, Header("Booleans")]
-    public bool canMove;
-    public bool wallGrab;
-    public bool wallJumped;
-    public bool wallSlide;
-    public bool isDashing;
-
-    [Space]
-    bool groundTouch;
-    bool hasDashed;
-
-    public int side = 1;
+    [SerializeField, ReadOnly] bool canMove;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
+    [SerializeField, ReadOnly] bool coyote;
+#pragma warning restore CS0414 // Field is assigned but its value is never used
+    [SerializeField, ReadOnly] bool wallGrab;
+    [SerializeField, ReadOnly] bool wallJumped;
+    [SerializeField, ReadOnly] bool wallSlide;
+    [SerializeField, ReadOnly] bool isDashing;
+    [SerializeField, ReadOnly] bool groundTouch;
+    [SerializeField, ReadOnly] bool hasDashed;
+    
+    /// <summary>
+    /// 1 == right, -1 == left
+    /// </summary>
+    [SerializeField, ReadOnly] int facing = 1;
 
     [Space, Header("Polish")]
-    public ParticleSystem dashParticle;
-    public ParticleSystem jumpParticle;
-    public ParticleSystem wallJumpParticle;
-    public ParticleSystem slideParticle;
+    [SerializeField] ParticleSystem dashParticle;
+    [SerializeField] ParticleSystem jumpParticle;
+    [SerializeField] ParticleSystem slideParticle;
+    [SerializeField] ParticleSystem wallJumpParticle;
+
+    #region Properties
+    public bool CanMove => canMove;
+    public bool WallGrab => wallGrab;
+    public bool WallJumped => wallJumped;
+    public bool WallSlide => wallSlide;
+    public bool IsDashing => isDashing;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +68,18 @@ public partial class Player : MonoBehaviour
         anim = GetComponentInChildren<AnimationScript>();
     }
 
+    bool onGUI;
+
+    // void OnGUI()
+    // {
+    //     // Draw all the booleans from the inspector on right of the screen
+    //     if (GUI.Button(new Rect(Screen.width - 100, 0, 100, 50), "Toggle GUI")) onGUI = !onGUI;
+    //     
+    //     if (!onGUI) return;
+    // }
+
     // Update is called once per frame
+    
     void Update()
     {
         float x    = MoveInput.x;
@@ -60,29 +91,40 @@ public partial class Player : MonoBehaviour
 
         InputAction dashAction = playerInput.actions["Dash"];
 
-        if (coll.onWall && dashAction.WasPressedThisFrame() && canMove)
+        if (coll.OnWall && dashAction.WasReleasedThisFrame() && canMove)
         {
-            if (side != coll.wallSide) anim.Flip(side * -1);
+            if (facing != coll.WallFacing) anim.Flip(facing * -1);
             wallGrab  = true;
             wallSlide = false;
         }
 
-        if (dashAction.WasReleasedThisFrame() || !coll.onWall || !canMove)
+        if (dashAction.WasReleasedThisFrame() || !coll.OnWall || !canMove)
         {
             wallGrab  = false;
             wallSlide = false;
         }
 
-        if (coll.onGround && !isDashing)
+        if (coll.OnGround)
         {
-            wallJumped                            = false;
+            coyoteTimeTimer = coyoteTimeDuration;
+            coyote         = true;
+        }
+        else
+        {
+            coyoteTimeTimer -= Time.deltaTime;
+            if (coyoteTimeTimer <= 0) coyote = false;
+        }
+
+        if (coll.OnGround && !isDashing)
+        {
+            wallJumped = false;
             GetComponent<BetterJumping>().enabled = true;
         }
 
         if (wallGrab && !isDashing)
         {
             rb.gravityScale = 0;
-            if (x > .2f || x < -.2f) rb.velocity = new (rb.velocity.x, 0);
+            if (x is > .2f or < -.2f) rb.velocity = new (rb.velocity.x, 0);
 
             float speedModifier = y > 0 ? .5f : 1;
 
@@ -90,22 +132,22 @@ public partial class Player : MonoBehaviour
         }
         else { rb.gravityScale = 3; }
 
-        if (coll.onWall && !coll.onGround)
+        if (coll.OnWall && !coll.OnGround)
             if (x != 0 && !wallGrab)
             {
                 wallSlide = true;
-                WallSlide();
+                WallSliding();
             }
 
-        if (!coll.onWall || coll.onGround) wallSlide = false;
+        if (!coll.OnWall || coll.OnGround) wallSlide = false;
 
-        if (coll.onGround && !groundTouch)
+        if (coll.OnGround && !groundTouch)
         {
             GroundTouch();
             groundTouch = true;
         }
 
-        if (!coll.onGround && groundTouch) groundTouch = false;
+        if (!coll.OnGround && groundTouch) groundTouch = false;
 
         WallParticle(y);
 
@@ -113,14 +155,14 @@ public partial class Player : MonoBehaviour
 
         if (x > 0)
         {
-            side = 1;
-            anim.Flip(side);
+            facing = 1;
+            anim.Flip(facing);
         }
 
         if (x < 0)
         {
-            side = -1;
-            anim.Flip(side);
+            facing = -1;
+            anim.Flip(facing);
         }
     }
 
@@ -129,16 +171,16 @@ public partial class Player : MonoBehaviour
         hasDashed = false;
         isDashing = false;
 
-        side = anim.sr.flipX ? -1 : 1;
+        facing = anim.SpriteRenderer.flipX ? -1 : 1;
 
         jumpParticle.Play();
     }
 
     void Dash(float x, float y)
     {
-        Camera.main.transform.DOComplete();
-        Camera.main.transform.DOShakePosition(.2f, .5f, 14);
-        FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
+        Helpers.CameraMain.transform.DOComplete();
+        Helpers.CameraMain.transform.DOShakePosition(.2f, .5f, 14);
+        FindObjectOfType<RippleEffect>().Emit(Helpers.CameraMain.WorldToViewportPoint(transform.position));
 
         hasDashed = true;
 
@@ -175,37 +217,39 @@ public partial class Player : MonoBehaviour
     IEnumerator GroundDash()
     {
         yield return new WaitForSeconds(.15f);
-        if (coll.onGround) hasDashed = false;
+        if (coll.OnGround) hasDashed = false;
     }
 
     void WallJump()
     {
-        if ((side == 1 && coll.onRightWall) || (side == -1 && !coll.onRightWall))
+        if ((facing == 1 && coll.OnRightWall) || (facing == -1 && !coll.OnRightWall))
         {
-            side *= -1;
-            anim.Flip(side);
+            facing *= -1;
+            anim.Flip(facing);
         }
 
         StopCoroutine(DisableMovement(0));
         StartCoroutine(DisableMovement(.1f));
 
-        Vector2 wallDir = coll.onRightWall ? Vector2.left : Vector2.right;
+        Vector2 wallDir = coll.OnRightWall ? Vector2.left : Vector2.right;
 
         Jump(Vector2.up / 1.5f + wallDir / 1.5f, true);
 
         wallJumped = true;
     }
 
-    void WallSlide()
+    bool WallSliding()
     {
-        if (coll.wallSide != side) anim.Flip(side * -1);
+        if (coll.WallFacing != facing) anim.Flip(facing * -1);
 
-        if (!canMove) return;
+        if (!canMove) return false;
 
-        bool  pushingWall = (rb.velocity.x > 0 && coll.onRightWall) || (rb.velocity.x < 0 && coll.onLeftWall);
+        bool  pushingWall = (rb.velocity.x < 0 && coll.OnLeftWall) || (rb.velocity.x > 0 && coll.OnRightWall);
         float push        = pushingWall ? 0 : rb.velocity.x;
 
-        rb.velocity = new (push, -slideSpeed);
+        rb.velocity = new (push, rb.velocity.y);
+        
+        return true;
     }
 
     void Walk(Vector2 dir)
@@ -214,8 +258,7 @@ public partial class Player : MonoBehaviour
 
         if (wallGrab) return;
 
-        if (!wallJumped) rb.velocity = new (dir.x                                                                 * speed, rb.velocity.y);
-        else rb.velocity             = Vector2.Lerp(rb.velocity, new (dir.x * speed, rb.velocity.y), wallJumpLerp * Time.deltaTime);
+        rb.velocity = !wallJumped ? new (dir.x * speed, rb.velocity.y) : Vector2.Lerp(rb.velocity, new (dir.x * speed, rb.velocity.y), wallJumpLerp * Time.deltaTime);
     }
 
     void Jump(Vector2 dir, bool wall)
@@ -252,7 +295,7 @@ public partial class Player : MonoBehaviour
 
     int ParticleSide()
     {
-        int particleSide = coll.onRightWall ? 1 : -1;
+        int particleSide = coll.OnRightWall ? 1 : -1;
         return particleSide;
     }
 }

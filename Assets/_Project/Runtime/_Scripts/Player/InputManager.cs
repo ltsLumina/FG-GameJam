@@ -29,8 +29,15 @@ public partial class Player // InputManager
         {
             anim.SetTrigger("jump");
 
-            if (coll.onGround) Jump(Vector2.up, false);
-            if (coll.onWall && !coll.onGround) WallJump();
+            if (coll.OnGround || coyoteTimeTimer > 0)
+            {
+                Jump(Vector2.up, false);
+                coyoteTimeTimer = 0; // Reset coyote time after jumping
+            }
+            else if (coll.OnWall && !coll.OnGround)
+            {
+                WallJump(); 
+            }
         }
     }
     

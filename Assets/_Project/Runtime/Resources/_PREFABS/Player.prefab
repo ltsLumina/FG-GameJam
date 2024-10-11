@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c8c358d94b24a4fbd8ce20af91d7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sr: {fileID: 0}
 --- !u!1 &1197789563168509532
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,10 +132,10 @@ GameObject:
   - component: {fileID: 1487072169456651973}
   - component: {fileID: 6743942976788307730}
   - component: {fileID: 6664600327893674445}
-  - component: {fileID: 6520518318004593990}
+  - component: {fileID: 5701751346619517205}
   m_Layer: 0
-  m_Name: Celeste
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,24 +172,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f4455ccd6f8f940bbf856d968a3c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   speed: 7
   jumpForce: 12
-  slideSpeed: 3
   wallJumpLerp: 5
   dashSpeed: 40
   startDrag: 5
   endDrag: 0
+  coyoteTimeDuration: 0.2
   canMove: 1
+  coyote: 0
   wallGrab: 0
   wallJumped: 0
   wallSlide: 0
   isDashing: 0
-  side: 1
+  groundTouch: 0
+  hasDashed: 0
+  facing: 1
   dashParticle: {fileID: 7009008357920834538}
   jumpParticle: {fileID: 1199977406472904310}
-  wallJumpParticle: {fileID: 2989824502722309002}
   slideParticle: {fileID: 938529569727190862}
+  wallJumpParticle: {fileID: 2989824502722309002}
 --- !u!114 &1487072169456651973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,11 +225,12 @@ MonoBehaviour:
   onWall: 0
   onRightWall: 0
   onLeftWall: 0
-  wallSide: 0
+  wallFacing: 0
   collisionRadius: 0.1
   bottomOffset: {x: 0, y: -0.79}
   rightOffset: {x: 0.5, y: -0.33}
   leftOffset: {x: -0.5, y: -0.33}
+  gizmoColour: {r: 1, g: 0, b: 0, a: 1}
 --- !u!50 &6664600327893674445
 Rigidbody2D:
   serializedVersion: 4
@@ -245,7 +247,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 35488504846d05e4e99b31ec95b3bdc3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -256,8 +258,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &6520518318004593990
-CapsuleCollider2D:
+--- !u!58 &5701751346619517205
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -288,9 +290,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.33}
-  m_Size: {x: 0.86, y: 0.82}
-  m_Direction: 0
+  m_Offset: {x: 0, y: -0.3}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1206704181871423908
 GameObject:
   m_ObjectHideFlags: 0
@@ -14951,14 +14953,6 @@ MonoBehaviour:
     m_ActionId: af7883b5-e909-4050-a0e9-dafad9f5078a
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 926c3293-5d78-49b6-b608-f24d5c6d8c1a
-    m_ActionName: Player/Look[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c4bf66e6-cbab-4748-8bfb-a3a8a1f97dae
-    m_ActionName: Player/Fire[/Mouse/leftButton]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7053656716588648785}
         m_TargetAssemblyTypeName: Player, _Project.Runtime
@@ -14975,7 +14969,19 @@ MonoBehaviour:
     m_ActionId: 8c7c747c-4263-4387-b3b6-07f5311e36c3
     m_ActionName: Player/Pause[/Keyboard/escape]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7053656716588648785}
+        m_TargetAssemblyTypeName: Player, _Project.Runtime
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e11ed5c1-e85e-4137-9916-34e8ed9821f4
     m_ActionName: Player/Dash[/Keyboard/leftShift]
   - m_PersistentCalls:
@@ -15018,6 +15024,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 98d266b1-b479-4888-b42a-9d96210a2358
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7053656716588648785}
+        m_TargetAssemblyTypeName: Player, _Project.Runtime
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 587fb14b-aaa9-495a-868a-e7c5d451e05c
+    m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player

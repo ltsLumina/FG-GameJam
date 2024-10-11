@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class AnimationScript : MonoBehaviour
 {
+    Animator anim;
+    Player move;
+    Collision coll;
 
-    private Animator anim;
-    private Player move;
-    private Collision coll;
-    [HideInInspector]
-    public SpriteRenderer sr;
+    public SpriteRenderer SpriteRenderer { get; set; }
 
     void Start()
     {
         anim = GetComponent<Animator>();
         coll = GetComponentInParent<Collision>();
         move = GetComponentInParent<Player>();
-        sr = GetComponent<SpriteRenderer>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        anim.SetBool("onGround", coll.onGround);
-        anim.SetBool("onWall", coll.onWall);
-        anim.SetBool("onRightWall", coll.onRightWall);
-        anim.SetBool("wallGrab", move.wallGrab);
-        anim.SetBool("wallSlide", move.wallSlide);
-        anim.SetBool("canMove", move.canMove);
-        anim.SetBool("isDashing", move.isDashing);
+        anim.SetBool("onGround", coll.OnGround);
+        anim.SetBool("onWall", coll.OnWall);
+        anim.SetBool("onRightWall", coll.OnRightWall);
+        anim.SetBool("wallGrab", move.WallGrab);
+        anim.SetBool("wallSlide", move.WallSlide);
+        anim.SetBool("canMove", move.CanMove);
+        anim.SetBool("isDashing", move.IsDashing);
 
     }
 
@@ -46,18 +45,17 @@ public class AnimationScript : MonoBehaviour
     public void Flip(int side)
     {
 
-        if (move.wallGrab || move.wallSlide)
+        if (move.WallGrab || move.WallSlide)
         {
-            if (side == -1 && sr.flipX)
-                return;
-
-            if (side == 1 && !sr.flipX)
+            switch (side)
             {
-                return;
+                case -1 when SpriteRenderer.flipX:
+                case 1 when !SpriteRenderer.flipX:
+                    return;
             }
         }
 
-        bool state = (side == 1) ? false : true;
-        sr.flipX = state;
+        bool state = side != 1;
+        SpriteRenderer.flipX = state;
     }
 }
