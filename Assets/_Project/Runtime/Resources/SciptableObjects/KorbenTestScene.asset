@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d627f289778894c9852eadf6464392, type: 3}
   m_Name: KorbenTestScene
   m_EditorClassIdentifier: 
-  LevelName: 
-  KeyPositions: []
+  LevelName: KorbenTestScene
+  KeyPositions:
+  - {x: 0, y: 0}

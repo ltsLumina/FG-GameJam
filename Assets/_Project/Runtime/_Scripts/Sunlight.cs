@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Sunlight : MonoBehaviour
 {
+    Player _player;
+
 
     [SerializeField] GameObject path;
 
@@ -29,6 +31,8 @@ public class Sunlight : MonoBehaviour
         transform.position = _pathPoints[0];
         _prevPosIndex = 0;
         _nextPosIndex = 1;
+
+        _player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
@@ -46,4 +50,23 @@ public class Sunlight : MonoBehaviour
             }
         }
     }
+
+    private void FixedUpdate()
+    {
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, _player.transform.position - transform.position);
+        if (ray.collider != null)
+        {
+            bool haslineOfSight = ray.collider.CompareTag("Player");
+            if (haslineOfSight)
+            {
+                Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.green);
+            }
+            else
+            {
+                Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red);
+            }
+        }
+    }
+
+
 }
