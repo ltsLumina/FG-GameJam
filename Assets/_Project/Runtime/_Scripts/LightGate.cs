@@ -5,7 +5,7 @@ using UnityEngine;
 public class LightGate : MonoBehaviour
 {
     LightGateButton _gateButton;
-
+    [SerializeField] GameObject Beam;
     BoxCollider2D _bc;
 
     private bool _isOpen = false;
@@ -23,10 +23,12 @@ public class LightGate : MonoBehaviour
         if (_gateButton.Active)
         {
             _bc.enabled = false;
+            Beam.SetActive(false);
         }
         else if (!_gateButton.Active)
         {
             _bc.enabled = true;
+            Beam.SetActive(true);
         }
 
     }
