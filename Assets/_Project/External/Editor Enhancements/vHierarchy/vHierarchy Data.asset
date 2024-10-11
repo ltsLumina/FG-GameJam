@@ -13,5 +13,427 @@ MonoBehaviour:
   m_Name: vHierarchy Data
   m_EditorClassIdentifier: 
   sceneDatasByGuid:
+<<<<<<< HEAD
     keys: []
     values: []
+=======
+    keys:
+    - 
+    - 8c9cfa26abfee488c85f1582747f6a02
+    - af435a0733e7d2f439d6fa5bbfb5b236
+    - cdcbe07e1987d564aafd4fef0ccca2bb
+    - 348f51f40abc2e640b1b9a3d909fc53b
+    - 9ada266df219ea44eb500eac51b07c47
+    values:
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []
+    - goDatasByGlobalId:
+        keys:
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1739582507-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1027630654-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1735590848-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-853260997-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-803050823-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1269028310-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-941179829-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-552556335-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-519420028-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-686728591-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-332472058-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1513159774-0
+        - GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1517527078-0
+        values:
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+      goDatasByInstanceId:
+        keys: 
+        values: []
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []
+    - goDatasByGlobalId:
+        keys:
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-1739582507-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-1027630654-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-1735590848-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-853260997-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-803050823-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-1513159774-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-1517527078-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-941179829-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-552556335-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-519420028-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-686728591-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-332472058-0
+        - GlobalObjectId_V1-2-cdcbe07e1987d564aafd4fef0ccca2bb-1269028310-0
+        values:
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+      goDatasByInstanceId:
+        keys: 268200000282000022820000e6810000e08100001a8200001e820000f0810000c4810000b8810000d6810000b081000010820000a484000080840000a0840000648400005e840000988400009c8400006e8400004284000036840000548400002e8400008e8400003e8900001a8900003a890000fe880000f8880000328900003689000008890000dc880000d0880000ee880000c888000028890000ae8c00008a8c0000aa8c00006e8c0000688c0000a28c0000a68c0000788c00004c8c0000408c00005e8c0000388c0000988c000000910000dc900000fc900000c0900000ba900000f4900000f8900000ca9000009e90000092900000b09000008a900000ea900000ce920000aa920000ca9200008e92000088920000c2920000c6920000989200006c920000609200007e92000058920000b892000058970000349700005497000018970000129700004c9700005097000022970000ec960000e0960000fe960000d896000042970000
+        values:
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: EventSystem Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Light Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []
+    - goDatasByGlobalId:
+        keys:
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1858957218-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1739582507-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1027630654-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1735590848-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-853260997-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-803050823-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1513159774-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1985604051-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1269028310-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1517527078-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-941179829-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-552556335-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-519420028-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-686728591-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-332472058-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-766389481-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-619394800-0
+        values:
+        - iColor: 0
+          icon: DirectionalLight Icon
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: PreMatCube
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: Light Icon
+      goDatasByInstanceId:
+        keys: 8e950000689500002295000064950000fc940000f6940000549500009c95000036950000589500000e950000cc940000c0940000e0940000ae940000669e00003e9e0000fc9d00003a9e0000d69d0000d09d00002a9e0000769e0000149e00002e9e0000e89d0000a69d0000989d0000ba9d0000889d0000ca9d0000b49d0000
+        values:
+        - iColor: 0
+          icon: DirectionalLight Icon
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: PreMatCube
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: DirectionalLight Icon
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: Settings Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Canvas Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: PreMatCube
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: Camera Icon
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: 
+        - iColor: 0
+          icon: Light Icon
+>>>>>>> dbea6fa6653778eb1a0c8077379c75d46c31466a

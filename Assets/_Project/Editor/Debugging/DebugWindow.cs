@@ -29,8 +29,7 @@ public class DebugWindow : EditorWindow
     static string commandQuery = string.Empty;
 
     readonly static Dictionary<string, string> commandDictionary = new ()
-    { { "help", "Shows the list of available commands." },
-    };
+    { { "help", "Shows the list of available commands." } };
 
     readonly static List<string> addedScenes = new ();
 
@@ -60,7 +59,7 @@ public class DebugWindow : EditorWindow
             addedScenes.Clear();
 
             // Clear the search query.
-            searchQuery  = string.Empty;
+            searchQuery = string.Empty;
             commandQuery = string.Empty;
 
             // Remove the play mode state changed event.
@@ -75,16 +74,24 @@ public class DebugWindow : EditorWindow
     {
         // Dock next to inspector. Find the inspector window using reflection
         Type desiredDockNextTo = typeof(EditorWindow).Assembly.GetType("UnityEditor.InspectorWindow");
-        var  window            = GetWindow<DebugWindow>("Debug", true, desiredDockNextTo);
+        var window = GetWindow<DebugWindow>("Debug", true, desiredDockNextTo);
 
         // Set the icon. The icon is found in the Icons folder. Name of icon is "Debug.png"
         var icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor/Debugging/Icons/Debug.png");
         window.titleContent.image = icon;
-        window.minSize            = new (350, 200);
-        window.maxSize            = window.minSize;
+        window.minSize = new (350, 200);
+        window.maxSize = window.minSize;
 
         window.Show();
     }
+
+    #region Commands
+    static void HelpCommand()
+    {
+        if (!commandsListFoldout) commandsListFoldout = true;
+        else Logger.Log("Commands can be viewed from the commands list at the bottom of the" + nameof(DebugWindow));
+    }
+    #endregion
 
     #region GUI
     static void DefaultMenu()
@@ -333,7 +340,7 @@ public class DebugWindow : EditorWindow
             {
                 if (int.TryParse(searchQuery, out int newMax))
                 {
-                    maxPingedAssets          = newMax;
+                    maxPingedAssets = newMax;
                     isSettingMaxPingedAssets = false;
 
                     Logger.Log($"Max pinged assets set to {maxPingedAssets}.");
@@ -419,8 +426,8 @@ public class DebugWindow : EditorWindow
                 return;
             }
 
-            string message    = $"Executing command: \"{cmd}\"" + "\n" + commandDictionary[cmd];
-            bool   canExecute = !Application.isPlaying && cmd != "help";
+            string message = $"Executing command: \"{cmd}\"" + "\n" + commandDictionary[cmd];
+            bool canExecute = !Application.isPlaying && cmd != "help";
 
             if (canExecute)
             {
@@ -438,7 +445,7 @@ public class DebugWindow : EditorWindow
                 case var command when command.Contains("help"):
                     HelpCommand();
                     break;
-                
+
                 case var command when command.Contains("null"):
                     //
                     Logger.Log(message);
@@ -451,14 +458,6 @@ public class DebugWindow : EditorWindow
 
             commandQuery = string.Empty;
         }
-    }
-    #endregion
-
-    #region Commands
-    static void HelpCommand()
-    {
-        if (!commandsListFoldout) commandsListFoldout = true;
-        else Logger.Log("Commands can be viewed from the commands list at the bottom of the" + nameof(DebugWindow));
     }
     #endregion
 
@@ -503,15 +502,17 @@ public class DebugWindow : EditorWindow
         string path = SceneUtility.GetScenePathByBuildIndex(sceneIndex);
 
         // Prompt to save the scene before opening a new one.
-        EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-
-        EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
-
-        if ((DateTime.Now - lastDebugLogTime).TotalHours >= 2)
+        if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
         {
-            Debug.LogWarning("Opened a scene using the debug menu!");
-            lastDebugLogTime = DateTime.Now;
+            EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+
+            if ((DateTime.Now - lastDebugLogTime).TotalHours >= 2)
+            {
+                Logger.LogWarning("Opened a scene using the debug menu!");
+                lastDebugLogTime = DateTime.Now;
+            }
         }
+        else { Logger.LogWarning("Scene Load Cancelled."); }
     }
 
     static void AddCustomScenes()
@@ -543,8 +544,8 @@ public class DebugWindow : EditorWindow
             string searchFilter;
 
             // Check if searchQuery has quotes for an exact match, else perform a loose match.
-            if (searchQuery.StartsWith('"') && searchQuery.EndsWith('"')) searchFilter = "t:Object "   + searchQuery;
-            else searchFilter                                                          = "t:Object \"" + searchQuery + "\"";
+            if (searchQuery.StartsWith('"') && searchQuery.EndsWith('"')) searchFilter = "t:Object " + searchQuery;
+            else searchFilter = "t:Object \"" + searchQuery + "\"";
 
             string[] guids = AssetDatabase.FindAssets(searchFilter);
             return guids;
@@ -556,7 +557,7 @@ public class DebugWindow : EditorWindow
         //Find the exact match if any
         foreach (string guid in strings)
         {
-            string path     = AssetDatabase.GUIDToAssetPath(guid);
+            string path = AssetDatabase.GUIDToAssetPath(guid);
             string fileName = Path.GetFileNameWithoutExtension(path);
 
             if (fileName.Equals(searchQuery))
