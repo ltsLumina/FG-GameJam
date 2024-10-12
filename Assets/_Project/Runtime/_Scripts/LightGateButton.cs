@@ -6,6 +6,8 @@ public class LightGateButton : MonoBehaviour
 {
 
     private bool _status = false;
+    [SerializeField] GameObject buttonON;
+    [SerializeField] GameObject buttonOFF;
 
     public bool Active
     {
@@ -34,11 +36,13 @@ public class LightGateButton : MonoBehaviour
     {
         if (_status)
         {
-            _spriteRenderer.color = Color.green;
+            buttonON.SetActive(true);
+            buttonOFF.SetActive(false);
         }
         else if (!_status)
         {
-            _spriteRenderer.color = Color.red;
+            buttonON.SetActive(false);
+            buttonOFF.SetActive(true);
         }
     }
 }
