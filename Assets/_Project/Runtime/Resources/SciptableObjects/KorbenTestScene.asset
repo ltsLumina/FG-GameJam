@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelName: KorbenTestScene
   KeyPositions:
-  - {x: 0, y: 0}
+  - {x: 0, y: 0, z: 1e-45}
+  - {x: 0, y: 0, z: 7.41e-43}
+  - {x: 0, y: 0, z: -8.225408e+15}
+  JourneyTimes:
+  - 1
+  - 1
