@@ -9,44 +9,23 @@ public class Sunlight : MonoBehaviour
     const bool debugToggle = false;
 
     [SerializeField] GameObject path;
+    [SerializeField] List<float> _pathTimes = new ();
 
     float _movementSpeed = 1.0f;
     int _nextPosIndex;
 
     private List<Vector2> _pathPoints = new List<Vector2>();
-    [SerializeField] List<float> _pathTimes = new List<float>();
     private List<float> _pathSpeeds = new List<float>();
-
 
     Player _player;
 
     private int _prevPosIndex;
 
-    private void OnValidate()
-    {
-        _pathPoints.Clear();
-        foreach (Transform childTransform in path.transform)
-        {
-            Vector2 newPathPoint = new Vector2(0, 0);
-            newPathPoint.x = childTransform.position.x;
-            newPathPoint.y = childTransform.position.y;
-            _pathPoints.Add(newPathPoint);
-        }
-
-        int properTimeCount = _pathPoints.Count - 1;
-        if (_pathTimes.Count != properTimeCount)
-        {
-            if (_pathTimes.Count < properTimeCount)
-            {
-                _pathTimes.Add(1f);
-            }
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         _pathPoints.Clear();
+
         foreach (Transform childTransform in path.transform)
         {
             Vector2 newPathPoint = new Vector2(0, 0);
@@ -62,8 +41,6 @@ public class Sunlight : MonoBehaviour
             float distanceBetween = (endPoint - startPoint).magnitude;
             float speed = distanceBetween / _pathTimes[i];
             _pathSpeeds.Add(speed);
-
-
         }
 
         transform.position = _pathPoints[0];
@@ -88,10 +65,7 @@ public class Sunlight : MonoBehaviour
                 _nextPosIndex++;
                 Debug.Log(_nextPosIndex);
             }
-            else if (_nextPosIndex < _pathPoints.Count - 1)
-            {
-                Debug.Log("Route Done");
-            }
+            else if (_nextPosIndex < _pathPoints.Count - 1) { Debug.Log("Route Done"); }
         }
     }
 
@@ -124,4 +98,22 @@ public class Sunlight : MonoBehaviour
         foreach (Vector2 pathPoint in _pathPoints) { Gizmos.DrawWireSphere(pathPoint, .45f); }
     }
 
+    void OnValidate()
+    {
+        _pathPoints.Clear();
+
+        foreach (Transform childTransform in path.transform)
+        {
+            var newPathPoint = new Vector2(0, 0);
+            newPathPoint.x = childTransform.position.x;
+            newPathPoint.y = childTransform.position.y;
+            _pathPoints.Add(newPathPoint);
+        }
+
+        int properTimeCount = _pathPoints.Count - 1;
+
+        if (_pathTimes.Count != properTimeCount)
+            if (_pathTimes.Count < properTimeCount)
+                _pathTimes.Add(1f);
+    }
 }

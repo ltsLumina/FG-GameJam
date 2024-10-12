@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
+    [SerializeField] bool useObjectPosition;
     [SerializeField] bool raycastSpawnPoint;
     [SerializeField] Vector2 spawnPoint;
 
@@ -11,6 +12,8 @@ public class SpawnPoint : MonoBehaviour
 
     void Start()
     {
+        if (useObjectPosition) spawnPoint = transform.position;
+
         var player = FindObjectOfType<Player>();
         player.transform.position = spawnPoint;
     }
@@ -23,7 +26,7 @@ public class SpawnPoint : MonoBehaviour
 
     void OnValidate()
     {
-        if (!raycastSpawnPoint) return;
+        if (!raycastSpawnPoint || useObjectPosition) return;
 
         // Perform a raycast downwards from the spawn point to find the ground
         RaycastHit2D hit = Physics2D.Raycast(new (spawnPoint.x, spawnPoint.y), Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
@@ -39,4 +42,6 @@ public class SpawnPoint : MonoBehaviour
 
         transform.position = spawnPoint;
     }
+
+    public override string ToString() => $"SpawnPoint: {spawnPoint}";
 }

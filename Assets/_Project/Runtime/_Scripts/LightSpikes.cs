@@ -11,6 +11,6 @@ public class LightSpikes : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) _player.Death();
+        if (other.CompareTag("Player")) _player.Death(Player.CauseOfDeath.Spikes);
     }
 }

@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f832bddb103dbc84e8274af62a5725f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movementSpeed: 1
   path: {fileID: 3180237003403114572}
   loopPath: 1
 --- !u!212 &4157234396979599277

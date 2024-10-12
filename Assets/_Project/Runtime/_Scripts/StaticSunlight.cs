@@ -46,3 +46,31 @@ public class StaticSunlight : MonoBehaviour
         name = $"Static Sunlight - {transform.position} - #{index}";
     }
 }
+
+public static class MenuIntegration
+{
+    [MenuItem("GameObject/Light/Static Sunlight")]
+    public static void CreateStaticSunlightMenu(MenuCommand menuCommand)
+    {
+        GameObject o = CreateStaticLight();
+
+        Undo.RegisterCreatedObjectUndo(o, "Create Static Light");
+
+        Selection.activeGameObject = o.GetComponentInChildren<StaticSunlight>().gameObject;
+    }
+
+    static GameObject CreateStaticLight()
+    {
+        var o = Resources.Load<GameObject>("_PREFABS/Static Sunlight");
+
+        if (o == null)
+        {
+            Debug.LogError("Couldn't find Static Sunlight prefab.");
+            return null;
+        }
+
+        o = Object.Instantiate(o);
+
+        return o;
+    }
+}

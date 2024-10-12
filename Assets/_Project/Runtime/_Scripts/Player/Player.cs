@@ -9,6 +9,14 @@ using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour
 {
+    public enum CauseOfDeath
+    {
+        Light,
+        Spikes,
+        Killplane,
+        Other,
+    }
+
     readonly static int IsDead = Animator.StringToHash("isDead");
     [Space, Header("Stats")]
     [SerializeField] float speed = 10f;
@@ -51,17 +59,14 @@ public partial class Player : MonoBehaviour
     [Header("Transition")]
     [SerializeField] TransitionAnimator deathTransition;
     [SerializeField] TransitionAnimator loadTransition;
-
     AnimationScript anim;
     Collision coll;
 
     float coyoteTimeTimer;
     float jumpBufferTimer;
 
-    bool onGUI;
     Rigidbody2D rb;
 
-    // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<Collision>();
@@ -73,16 +78,6 @@ public partial class Player : MonoBehaviour
         rb.gravityScale = gravityScale;
         transform.position = SpawnPoint;
     }
-
-    // void OnGUI()
-    // {
-    //     // Draw all the booleans from the inspector on right of the screen
-    //     if (GUI.Button(new Rect(Screen.width - 100, 0, 100, 50), "Toggle GUI")) onGUI = !onGUI;
-    //     
-    //     if (!onGUI) return;
-    // }
-
-    // Update is called once per frame
 
     void Update()
     {
@@ -332,22 +327,60 @@ public partial class Player : MonoBehaviour
         return particleSide;
     }
 
-    public void Death()
+    public void Death(CauseOfDeath cause = default)
     {
         if (anim.GetComponent<Animator>().GetBool(IsDead)) return;
 
-        anim.SetTrigger("death");
-        anim.GetComponent<Animator>().SetBool(IsDead, true);
+        switch (cause)
+        {
+            case CauseOfDeath.Light:
+                PlayAnimation();
+                break;
 
-        enabled = false;
-        StopAllCoroutines();
+            case CauseOfDeath.Spikes:
+                PlayAnimation();
+                break;
 
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 0;
+            case CauseOfDeath.Killplane:
+                SkipAnimation();
+                break;
 
-        StartCoroutine(Delay());
+            case CauseOfDeath.Other:
+                PlayAnimation();
+                Logger.LogWarning("Player has died by unknown means. \nPlease check the calling method.");
+                break;
+
+            default:
+                PlayAnimation();
+                Logger.LogWarning("No cause of death was provided. \nPlease check the calling method.");
+                break;
+        }
 
         return;
+
+        void PlayAnimation()
+        {
+            anim.SetTrigger("death");
+            anim.GetComponent<Animator>().SetBool(IsDead, true);
+
+            enabled = false;
+            StopAllCoroutines();
+
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+
+            StartCoroutine(Delay());
+        }
+
+        void SkipAnimation()
+        {
+            anim.GetComponent<Animator>().SetBool(IsDead, true);
+            enabled = false;
+            StopAllCoroutines();
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+            deathTransition.Play();
+        }
 
         IEnumerator Delay()
         {
@@ -362,6 +395,14 @@ public partial class Player : MonoBehaviour
     public bool WallJumped => wallJumped;
     public bool WallSlide => wallSlide;
     public bool IsDashing => isDashing;
-    public Vector2 SpawnPoint => FindObjectOfType<SpawnPoint>().Position;
+    public static Vector2 SpawnPoint
+    {
+        get
+        {
+            if (FindObjectOfType<SpawnPoint>() != null) return FindObjectOfType<SpawnPoint>().Position;
+            Logger.LogError($"No spawn point found. Please create a \"{typeof(SpawnPoint)}\" GameObject (from Resources/PREFABS) \nReturning Vector2.zero.");
+            return Vector2.zero;
+        }
+    }
     #endregion
 }

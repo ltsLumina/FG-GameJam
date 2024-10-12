@@ -14787,7 +14787,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   loadSceneAtEnd: 1
-  sceneNameToLoad: KorbenSanbox
+  sceneNameToLoad: Level 3
   sceneLoadMode: 0
   fadeToCamera: 0
   mainCamera: {fileID: 0}
@@ -14912,6 +14912,7 @@ MonoBehaviour:
   onRightWall: 0
   onLeftWall: 0
   wallFacing: 0
+  onMovingPlatform: 0
   collisionRadius: 0.1
   bottomOffset: {x: 0, y: -0.9}
   rightOffset: {x: 0.5, y: -0.33}
@@ -20328,7 +20329,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6858338471644761775}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

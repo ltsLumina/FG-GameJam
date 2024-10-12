@@ -1,24 +1,21 @@
-using System.Collections;
+#region
 using System.Collections.Generic;
 using UnityEngine;
+#endregion
 
 public class MovingPlatform : MonoBehaviour
 {
-
-    private float _movementSpeed = 1.0f;
-
+    [SerializeField] float _movementSpeed = 1.0f;
 
     [SerializeField] GameObject path;
 
     [SerializeField] bool loopPath = true;
+    int _nextPosIndex;
 
     private List<Vector2> _pathPoints = new List<Vector2>();
+    int _pathTransitionDir = 1;
 
     private int _prevPosIndex;
-    private int _nextPosIndex;
-    private int _pathTransitionDir = 1;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +31,6 @@ public class MovingPlatform : MonoBehaviour
         transform.position = _pathPoints[0];
         _prevPosIndex = 0;
         _nextPosIndex = 1;
-
     }
 
     // Update is called once per frame
@@ -43,6 +39,7 @@ public class MovingPlatform : MonoBehaviour
         Vector3 goal = new Vector3(_pathPoints[_nextPosIndex].x, _pathPoints[_nextPosIndex].y, 0);
         Vector3 toGoal = goal - transform.position;
         transform.position = Vector3.MoveTowards(transform.position, goal, _movementSpeed * Time.deltaTime);
+
         if (toGoal.magnitude <= 0.02f)
         {
             if (_nextPosIndex == _pathPoints.Count - 1)

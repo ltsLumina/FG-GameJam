@@ -28,7 +28,7 @@ public class Killplane : MonoBehaviour
                 {
                     if (testingMode)
                     {
-                        player.transform.position = player.SpawnPoint;
+                        player.transform.position = Player.SpawnPoint;
                         return;
                     }
 
@@ -42,13 +42,13 @@ public class Killplane : MonoBehaviour
                             if (EditorUtility.DisplayDialog("Death Limit", "Enter Testing Mode?", "Yes", "No"))
                             {
                                 testingMode = true;
-                                player.transform.position = player.SpawnPoint;
+                                player.transform.position = Player.SpawnPoint;
                             }
                             else
                             {
                                 deaths = 0;
                                 Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
-                                player.Death();
+                                player.Death(Player.CauseOfDeath.Killplane);
                             }
 
                             return;
@@ -57,12 +57,12 @@ public class Killplane : MonoBehaviour
                     }
 
                     Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
-                    player.Death();
+                    player.Death(Player.CauseOfDeath.Killplane);
                 }
                 else
                 {
                     Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
-                    player.transform.position = player.SpawnPoint;
+                    player.transform.position = Player.SpawnPoint;
                 }
             }
         }
