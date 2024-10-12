@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 public partial class Player : MonoBehaviour
 {
     [Header("Spawn Point")]
+    [SerializeField] bool raycastSpawnPoint;
     [SerializeField] Vector2 spawnPoint;
 
     [Space, Header("Stats")]
@@ -176,6 +177,8 @@ public partial class Player : MonoBehaviour
 
     void OnValidate()
     {
+        if (!raycastSpawnPoint) return;
+
         // Perform a raycast downwards from the spawn point to find the ground
         RaycastHit2D hit = Physics2D.Raycast(new (spawnPoint.x, spawnPoint.y), Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
 
