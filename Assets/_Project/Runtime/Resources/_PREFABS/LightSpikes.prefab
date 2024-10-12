@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9125404950894788312}
   - component: {fileID: 3925052587023305028}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 518308401505536643}
   - component: {fileID: 8021762877649363594}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spike 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5491644039004732677}
   - component: {fileID: 8572686470331029356}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spike 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2915437480796675128}
   - component: {fileID: 3917708002346995405}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spike 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 8897261529582791292}
   - component: {fileID: 5360861935655251843}
   - component: {fileID: 3786502008062051172}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightSpikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

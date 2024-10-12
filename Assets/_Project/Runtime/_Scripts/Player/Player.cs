@@ -357,7 +357,7 @@ public partial class Player : MonoBehaviour
     {
         if (!enabled) return;
 
-        //anim.SetTrigger("death");
+        anim.SetTrigger("death");
         enabled = false;
         StopAllCoroutines();
         rb.velocity = Vector2.zero;
