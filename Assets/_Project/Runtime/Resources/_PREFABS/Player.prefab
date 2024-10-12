@@ -14827,7 +14827,7 @@ Transform:
   m_GameObject: {fileID: 1016054743396368001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.13, y: -0.99998724, z: 0}
+  m_LocalPosition: {x: -19.58, y: -2.0000153, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14853,7 +14853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastSpawnPoint: 1
-  spawnPoint: {x: -19.58, y: 2.999975}
+  spawnPoint: {x: -19.58, y: -2.0000153}
   speed: 10
   jumpForce: 16
   jumpBufferTime: 0.2
@@ -15419,7 +15419,7 @@ Animator:
   m_GameObject: {fileID: 5662431844982728943}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba1bda75f1af75e4988ed8142c180ff3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 494fef3e772160c4291e5d35d9fc60a0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
