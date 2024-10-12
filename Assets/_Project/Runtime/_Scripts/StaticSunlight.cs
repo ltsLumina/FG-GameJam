@@ -1,13 +1,24 @@
 #region
-using System.Collections;
 using DG.Tweening;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 #endregion
 
 public class StaticSunlight : MonoBehaviour
 {
     int index;
+
+    void OnEnable()
+    {
+#if UNITY_EDITOR
+
+        // Move this component to the top of the component list
+        Component[] components = gameObject.GetComponents(typeof(Component));
+
+        for (int i = 0; i < components.Length - 1; i++) { ComponentUtility.MoveComponentUp(this); }
+#endif
+    }
 
     void OnDrawGizmos()
     {
@@ -25,27 +36,19 @@ public class StaticSunlight : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        SpriteRenderer spriteRenderer;
-
         if (other.TryGetComponent(out Player player))
         {
-            spriteRenderer = player.GetComponentInChildren<SpriteRenderer>();
-            StartCoroutine(Wait());
-        }
+            var spriteRenderer = player.GetComponentInChildren<SpriteRenderer>();
+            Sequence sequence = DOTween.Sequence();
 
-        return;
+            sequence.AppendCallback
+            (() =>
+            {
+                Logger.LogWarning("Player has entered the sunlight. \nRespawning player at spawn point.");
+                player.Death();
+            });
 
-        IEnumerator Wait()
-        {
-            Logger.LogWarning("Player has entered the sunlight. \nRespawning player at spawn point.");
-
-            spriteRenderer.DOFade(0, .5f);
-            yield return new WaitForSeconds(.5f);
-
-            Color color = spriteRenderer.color;
-            color.a = 1;
-            spriteRenderer.color = color;
-            player.Death();
+            sequence.Append(spriteRenderer.DOFade(0, .5f));
         }
     }
 

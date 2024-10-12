@@ -1,13 +1,18 @@
 #region
+using UnityEditor;
 using UnityEngine;
 #endregion
 
 [ExecuteAlways]
 public class Killplane : MonoBehaviour
 {
+    static int deaths;
     [SerializeField] float killHeight = -10;
 
     Player player;
+
+    bool playerCountedAsDead;
+    bool testingMode;
 
     void Update()
     {
@@ -15,13 +20,53 @@ public class Killplane : MonoBehaviour
 
         if (player.transform.position.y < killHeight)
         {
-            if (Application.isPlaying)
+            if (!playerCountedAsDead)
             {
-                Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
-                player.transform.position = player.SpawnPoint;
+                playerCountedAsDead = true;
+
+                if (Application.isPlaying)
+                {
+                    if (testingMode)
+                    {
+                        player.transform.position = player.SpawnPoint;
+                        return;
+                    }
+
+                    if (Application.isEditor)
+                    {
+                        deaths++;
+
+#if UNITY_EDITOR
+                        if (deaths == 3 && !testingMode)
+                        {
+                            if (EditorUtility.DisplayDialog("Death Limit", "Enter Testing Mode?", "Yes", "No"))
+                            {
+                                testingMode = true;
+                                player.transform.position = player.SpawnPoint;
+                            }
+                            else
+                            {
+                                deaths = 0;
+                                Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
+                                player.Death();
+                            }
+
+                            return;
+                        }
+#endif
+                    }
+
+                    Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
+                    player.Death();
+                }
+                else
+                {
+                    Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
+                    player.transform.position = player.SpawnPoint;
+                }
             }
-            else if (Application.isEditor) { player.transform.position = player.SpawnPoint; }
         }
+        else { playerCountedAsDead = false; }
     }
 
     void OnDrawGizmos()
