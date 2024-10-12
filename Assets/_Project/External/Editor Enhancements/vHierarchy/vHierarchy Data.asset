@@ -13,5 +13,68 @@ MonoBehaviour:
   m_Name: vHierarchy Data
   m_EditorClassIdentifier: 
   sceneDatasByGuid:
-    keys: []
-    values: []
+    keys:
+    - 9ada266df219ea44eb500eac51b07c47
+    - f793cb19075fa6843beebb197d0882b0
+    - 
+    - cdcbe07e1987d564aafd4fef0ccca2bb
+    values:
+    - goDatasByGlobalId:
+        keys:
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1269028310-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1517527078-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-552556335-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-686728591-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-332472058-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-803050823-0
+        - GlobalObjectId_V1-2-9ada266df219ea44eb500eac51b07c47-1735590848-0
+        values:
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+      goDatasByInstanceId:
+        keys: 5684000074840000ee83000000840000d28300001684000084840000
+        values:
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []

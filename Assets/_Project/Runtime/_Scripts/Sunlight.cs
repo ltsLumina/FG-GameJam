@@ -1,21 +1,22 @@
-using System.Collections;
+#region
 using System.Collections.Generic;
 using UnityEngine;
+#endregion
 
 public class Sunlight : MonoBehaviour
 {
-    Player _player;
-
+    // Change this if you dont want the player to die on collision with the sunlight
+    const bool debugToggle = false;
 
     [SerializeField] GameObject path;
 
+    float _movementSpeed = 1.0f;
+    int _nextPosIndex;
+
     private List<Vector2> _pathPoints = new List<Vector2>();
+    Player _player;
 
     private int _prevPosIndex;
-    private int _nextPosIndex;
-
-    private float _movementSpeed = 1.0f;
-
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +42,7 @@ public class Sunlight : MonoBehaviour
         Vector3 goal = new Vector3(_pathPoints[_nextPosIndex].x, _pathPoints[_nextPosIndex].y, 0);
         Vector3 toGoal = goal - transform.position;
         transform.position = Vector3.MoveTowards(transform.position, goal, _movementSpeed * Time.deltaTime);
+
         if (toGoal.magnitude <= 0.02f)
         {
             if (_nextPosIndex < _pathPoints.Count - 1)
@@ -51,22 +53,25 @@ public class Sunlight : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         RaycastHit2D ray = Physics2D.Raycast(transform.position, _player.transform.position - transform.position);
+
         if (ray.collider != null)
         {
             bool haslineOfSight = ray.collider.CompareTag("Player");
+
             if (haslineOfSight)
             {
                 Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.green);
+
+                if (debugToggle)
+                {
+                    Debug.Log("Player has entered the sunlight. \nRespawning player at spawn point.");
+                    _player.Death();
+                }
             }
-            else
-            {
-                Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red);
-            }
+            else { Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red); }
         }
     }
-
-
 }
