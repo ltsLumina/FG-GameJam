@@ -13,18 +13,57 @@ public class Sunlight : MonoBehaviour
     float _movementSpeed = 1.0f;
     int _nextPosIndex;
 
-    List<Vector2> _pathPoints = new ();
+    private List<Vector2> _pathPoints = new List<Vector2>();
+    [SerializeField] List<float> _pathTimes = new List<float>();
+    private List<float> _pathSpeeds = new List<float>();
+
+
     Player _player;
 
-    // Start is called before the first frame update
-    void Start()
+    private int _prevPosIndex;
+
+    private void OnValidate()
     {
+        _pathPoints.Clear();
         foreach (Transform childTransform in path.transform)
         {
             Vector2 newPathPoint = new Vector2(0, 0);
             newPathPoint.x = childTransform.position.x;
             newPathPoint.y = childTransform.position.y;
             _pathPoints.Add(newPathPoint);
+        }
+
+        int properTimeCount = _pathPoints.Count - 1;
+        if (_pathTimes.Count != properTimeCount)
+        {
+            if (_pathTimes.Count < properTimeCount)
+            {
+                _pathTimes.Add(1f);
+            }
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        _pathPoints.Clear();
+        foreach (Transform childTransform in path.transform)
+        {
+            Vector2 newPathPoint = new Vector2(0, 0);
+            newPathPoint.x = childTransform.position.x;
+            newPathPoint.y = childTransform.position.y;
+            _pathPoints.Add(newPathPoint);
+        }
+
+        for (int i = 0; i < _pathTimes.Count; i++)
+        {
+            Vector2 startPoint = _pathPoints[i];
+            Vector2 endPoint = _pathPoints[i + 1];
+            float distanceBetween = (endPoint - startPoint).magnitude;
+            float speed = distanceBetween / _pathTimes[i];
+            _pathSpeeds.Add(speed);
+
+
         }
 
         transform.position = _pathPoints[0];
@@ -38,11 +77,21 @@ public class Sunlight : MonoBehaviour
     {
         Vector3 goal = new Vector3(_pathPoints[_nextPosIndex].x, _pathPoints[_nextPosIndex].y, 0);
         Vector3 toGoal = goal - transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, goal, _movementSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, goal, _pathSpeeds[_nextPosIndex - 1] * Time.deltaTime);
 
         if (toGoal.magnitude <= 0.02f)
         {
-            if (_nextPosIndex < _pathPoints.Count - 1) _nextPosIndex++;
+            //last one
+            if (_nextPosIndex < _pathPoints.Count - 2)
+            {
+                _prevPosIndex = _nextPosIndex;
+                _nextPosIndex++;
+                Debug.Log(_nextPosIndex);
+            }
+            else if (_nextPosIndex < _pathPoints.Count - 1)
+            {
+                Debug.Log("Route Done");
+            }
         }
     }
 
@@ -74,4 +123,5 @@ public class Sunlight : MonoBehaviour
         Gizmos.color = Color.yellow;
         foreach (Vector2 pathPoint in _pathPoints) { Gizmos.DrawWireSphere(pathPoint, .45f); }
     }
+
 }

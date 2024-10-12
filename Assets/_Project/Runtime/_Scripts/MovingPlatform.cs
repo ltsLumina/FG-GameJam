@@ -43,9 +43,6 @@ public class MovingPlatform : MonoBehaviour
         Vector3 goal = new Vector3(_pathPoints[_nextPosIndex].x, _pathPoints[_nextPosIndex].y, 0);
         Vector3 toGoal = goal - transform.position;
         transform.position = Vector3.MoveTowards(transform.position, goal, _movementSpeed * Time.deltaTime);
-
-        Debug.Log(_nextPosIndex);
-
         if (toGoal.magnitude <= 0.02f)
         {
             if (_nextPosIndex == _pathPoints.Count - 1)
