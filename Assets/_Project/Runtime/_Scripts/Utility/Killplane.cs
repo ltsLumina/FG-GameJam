@@ -23,4 +23,10 @@ public class Killplane : MonoBehaviour
             else if (Application.isEditor) { player.transform.position = player.SpawnPoint; }
         }
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(new (-1000, killHeight, 0), new (1000, killHeight, 0));
+    }
 }

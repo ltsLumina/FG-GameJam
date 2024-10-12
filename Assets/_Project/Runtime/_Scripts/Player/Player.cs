@@ -124,7 +124,7 @@ public partial class Player : MonoBehaviour
 
             rb.velocity = new (rb.velocity.x, y * (speed * speedModifier));
         }
-        else { rb.gravityScale = 3; }
+        else { rb.gravityScale = 2.5f; }
 
         if (coll.OnWall && !coll.OnGround)
             if (x != 0 && !wallGrab)
@@ -229,7 +229,7 @@ public partial class Player : MonoBehaviour
         yield return new WaitForSeconds(.3f);
 
         dashParticle.Stop();
-        rb.gravityScale = 3;
+        rb.gravityScale = 2.5f;
         GetComponent<BetterJumping>().enabled = true;
         wallJumped = false;
         isDashing = false;

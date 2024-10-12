@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8762986961838240155}
   - component: {fileID: 2346999365958181664}
   m_Layer: 0
-  m_Name: Spotlight
+  m_Name: Static Sunlight - (-3.54, 19.70, 0.00) - #0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
