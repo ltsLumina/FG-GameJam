@@ -13,7 +13,6 @@ public class HueShifter : MonoBehaviour
         hueShader.SetFloat("_Red", 1);
         hueShader.SetFloat("_Green", 0);
         hueShader.SetFloat("_Blue", 0);
-        Debug.Log("Log");
     }
 
     private void Update()
