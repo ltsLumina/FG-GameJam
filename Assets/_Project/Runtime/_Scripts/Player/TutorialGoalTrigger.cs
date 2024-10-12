@@ -3,6 +3,7 @@ using System.Collections;
 using TransitionsPlus;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #endregion
 
 [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
@@ -43,6 +44,7 @@ public class TutorialGoalTrigger : MonoBehaviour
     void OnValidate()
     {
         goalTransition = GetComponentInChildren<TransitionAnimator>();
+        goalTransition.sceneNameToLoad = (SceneManager.GetActiveScene().buildIndex + 1).ToString();
 
         var rb = GetComponent<Rigidbody2D>();
         var bc = GetComponent<BoxCollider2D>();

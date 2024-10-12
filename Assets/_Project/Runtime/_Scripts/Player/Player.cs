@@ -2,7 +2,6 @@
 using System.Collections;
 using DG.Tweening;
 using Lumina.Essentials.Attributes;
-using Lumina.Essentials.Modules;
 using TransitionsPlus;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,12 +16,13 @@ public partial class Player : MonoBehaviour
     [Space, Header("Stats")]
     [SerializeField] float speed = 10f;
     [SerializeField] float jumpForce = 15f;
+    [SerializeField] float jumpBufferTime = 0.2f;
+    [SerializeField] float gravityScale;
     [SerializeField] float wallSlideMult = .95f;
     [SerializeField] float wallJumpMult = 1.15f;
     [SerializeField] float wallJumpLerp = 1f;
     [SerializeField] float dashSpeed = 25f;
-    [SerializeField] int startDrag = 5;
-    [SerializeField] int endDrag = 0;
+    [SerializeField] float dashDrag = 3;
 
     [Space, Header("Coyote Time")]
     [SerializeField] float coyoteTimeDuration = 0.2f;
@@ -56,7 +56,9 @@ public partial class Player : MonoBehaviour
 
     AnimationScript anim;
     Collision coll;
+
     float coyoteTimeTimer;
+    float jumpBufferTimer;
 
     bool onGUI;
     Rigidbody2D rb;
@@ -85,6 +87,11 @@ public partial class Player : MonoBehaviour
 
     void Update()
     {
+        if (jumpBufferTimer > 0) jumpBufferTimer -= Time.deltaTime;
+
+        {
+        }
+
         float x = MoveInput.x;
         float y = MoveInput.y;
         var dir = new Vector2(x, y);
@@ -133,7 +140,8 @@ public partial class Player : MonoBehaviour
 
             rb.velocity = new (rb.velocity.x, y * (speed * speedModifier));
         }
-        else { rb.gravityScale = 2.5f; }
+
+        else { rb.gravityScale = gravityScale; }
 
         if (coll.OnWall && !coll.OnGround)
             if (x != 0 && !wallGrab)
@@ -215,13 +223,20 @@ public partial class Player : MonoBehaviour
         facing = anim.SpriteRenderer.flipX ? -1 : 1;
 
         jumpParticle.Play();
+
+        // Check if jump buffer is still valid
+        if (jumpBufferTimer > 0)
+        {
+            Jump(Vector2.up, false);
+            jumpBufferTimer = 0; // Reset the buffer timer after jumping
+        }
     }
 
     void Dash(float x, float y)
     {
-        Helpers.CameraMain.transform.DOComplete();
-        Helpers.CameraMain.transform.DOShakePosition(.2f, .5f, 14);
-        FindObjectOfType<RippleEffect>().Emit(Helpers.CameraMain.WorldToViewportPoint(transform.position));
+        Camera.main.transform.DOComplete();
+        Camera.main.transform.DOShakePosition(.2f, .5f, 14);
+        FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
 
         hasDashed = true;
 
@@ -238,7 +253,7 @@ public partial class Player : MonoBehaviour
     {
         FindObjectOfType<GhostTrail>().ShowGhost();
         StartCoroutine(GroundDash());
-        DOVirtual.Float(startDrag, endDrag, .8f, RigidbodyDrag);
+        DOVirtual.Float(dashDrag, 0, .8f, RigidbodyDrag);
 
         dashParticle.Play();
         rb.gravityScale = 0;
@@ -249,7 +264,7 @@ public partial class Player : MonoBehaviour
         yield return new WaitForSeconds(.3f);
 
         dashParticle.Stop();
-        rb.gravityScale = 2.5f;
+        rb.gravityScale = gravityScale;
         GetComponent<BetterJumping>().enabled = true;
         wallJumped = false;
         isDashing = false;
@@ -305,7 +320,7 @@ public partial class Player : MonoBehaviour
         slideParticle.transform.parent.localScale = new (ParticleSide(), 1, 1);
         ParticleSystem particle = wall ? wallJumpParticle : jumpParticle;
 
-        rb.velocity = new (rb.velocity.x, 0);
+        rb.velocity = new (rb.velocity.x * 2, 0);
         rb.velocity += dir * jumpForce;
 
         particle.Play();
@@ -338,10 +353,16 @@ public partial class Player : MonoBehaviour
         return particleSide;
     }
 
-    public void Death() =>
+    public void Death()
+    {
+        if (!enabled) return;
 
         //anim.SetTrigger("death");
+        enabled = false;
+        StopAllCoroutines();
+        rb.velocity = Vector2.zero;
         deathTransition.Play();
+    }
 
     #region Properties
     public bool CanMove => canMove;

@@ -1,5 +1,7 @@
+#region
 using UnityEngine;
 using UnityEngine.InputSystem;
+#endregion
 
 public partial class Player // InputManager
 {
@@ -34,13 +36,11 @@ public partial class Player // InputManager
                 Jump(Vector2.up, false);
                 coyoteTimeTimer = 0; // Reset coyote time after jumping
             }
-            else if (coll.OnWall && !coll.OnGround)
-            {
-                WallJump(); 
-            }
+            else if (coll.OnWall && !coll.OnGround) { WallJump(); }
+            else { jumpBufferTimer = jumpBufferTime; }
         }
     }
-    
+
     public void OnDash(InputAction.CallbackContext context)
     {
         float xRaw = MoveInputRaw.x;
@@ -49,7 +49,7 @@ public partial class Player // InputManager
         if (!context.performed || hasDashed) return;
         if (xRaw != 0 || yRaw != 0) Dash(xRaw, yRaw);
     }
-    
+
     // -- UI Input Actions --
 
     /// <summary>
