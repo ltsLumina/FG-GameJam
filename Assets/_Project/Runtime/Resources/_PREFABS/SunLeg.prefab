@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9213442387320046709}
   - component: {fileID: 5522967174724504027}
   - component: {fileID: 4283535458496566763}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SunLeg
   m_TagString: sunLeg
   m_Icon: {fileID: 0}
@@ -76,6 +76,7 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
+  - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   m_Parameters:
