@@ -41,14 +41,16 @@ public class StaticSunlight : MonoBehaviour
             var spriteRenderer = player.GetComponentInChildren<SpriteRenderer>();
             Sequence sequence = DOTween.Sequence();
 
-            sequence.AppendCallback
-            (() =>
-            {
-                Logger.LogWarning("Player has entered the sunlight. \nRespawning player at spawn point.");
-                player.Death();
-            });
+            player.Death();
 
-            sequence.Append(spriteRenderer.DOFade(0, .5f));
+            // sequence.AppendCallback
+            // (() =>
+            // {
+            //     Logger.LogWarning("Player has entered the sunlight. \nRespawning player at spawn point.");
+            //     player.Death();
+            // });
+
+            //sequence.Append(spriteRenderer.DOFade(0, .5f));
         }
     }
 

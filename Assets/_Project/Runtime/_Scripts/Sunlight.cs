@@ -13,10 +13,8 @@ public class Sunlight : MonoBehaviour
     float _movementSpeed = 1.0f;
     int _nextPosIndex;
 
-    private List<Vector2> _pathPoints = new List<Vector2>();
+    List<Vector2> _pathPoints = new ();
     Player _player;
-
-    private int _prevPosIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +28,6 @@ public class Sunlight : MonoBehaviour
         }
 
         transform.position = _pathPoints[0];
-        _prevPosIndex = 0;
         _nextPosIndex = 1;
 
         _player = FindObjectOfType<Player>();
@@ -45,11 +42,7 @@ public class Sunlight : MonoBehaviour
 
         if (toGoal.magnitude <= 0.02f)
         {
-            if (_nextPosIndex < _pathPoints.Count - 1)
-            {
-                _prevPosIndex = _nextPosIndex;
-                _nextPosIndex++;
-            }
+            if (_nextPosIndex < _pathPoints.Count - 1) _nextPosIndex++;
         }
     }
 
@@ -73,5 +66,12 @@ public class Sunlight : MonoBehaviour
             }
             else { Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red); }
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        // draw sphere at path points
+        Gizmos.color = Color.yellow;
+        foreach (Vector2 pathPoint in _pathPoints) { Gizmos.DrawWireSphere(pathPoint, .45f); }
     }
 }

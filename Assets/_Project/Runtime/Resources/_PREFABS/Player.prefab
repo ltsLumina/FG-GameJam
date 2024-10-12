@@ -14787,7 +14787,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   loadSceneAtEnd: 1
-  sceneNameToLoad: 4
+  sceneNameToLoad: 2
   sceneLoadMode: 0
   fadeToCamera: 0
   mainCamera: {fileID: 0}
@@ -14827,7 +14827,7 @@ Transform:
   m_GameObject: {fileID: 1016054743396368001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.58, y: -2.0000153, z: 0}
+  m_LocalPosition: {x: -19.58, y: -8.000024, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14853,7 +14853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastSpawnPoint: 1
-  spawnPoint: {x: -19.58, y: -2.0000153}
+  spawnPoint: {x: -19.58, y: -8.000024}
   speed: 10
   jumpForce: 16
   jumpBufferTime: 0.2
@@ -15398,7 +15398,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5687433107252131833, guid: 8f6b857519ba7634f80efbe6a540da19, type: 3}
+  m_Sprite: {fileID: -825536147144802772, guid: 5d3129e51938dd54281e717207f55e34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

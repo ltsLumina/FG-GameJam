@@ -358,10 +358,22 @@ public partial class Player : MonoBehaviour
         if (!enabled) return;
 
         anim.SetTrigger("death");
+        anim.enabled = false;
         enabled = false;
         StopAllCoroutines();
         rb.velocity = Vector2.zero;
-        deathTransition.Play();
+        rb.gravityScale = 0;
+
+        StartCoroutine(Delay());
+
+        return;
+
+        IEnumerator Delay()
+        {
+            float animDuration = anim.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(animDuration * .75f);
+            deathTransition.Play();
+        }
     }
 
     #region Properties
