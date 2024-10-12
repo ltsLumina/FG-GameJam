@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GameManager : SingletonPersistent<GameManager>
 {
-    void Start()
-    {
-        if (!Application.isPlaying) return;
-    }
     #region Pause/Resume
     public static bool IsPaused { get; private set; }
 

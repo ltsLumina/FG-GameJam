@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using Lumina.Essentials.Attributes;
 using Lumina.Essentials.Modules;
+using TransitionsPlus;
 using UnityEngine;
 using UnityEngine.InputSystem;
 #endregion
@@ -10,6 +11,7 @@ using UnityEngine.InputSystem;
 public partial class Player : MonoBehaviour
 {
     [Header("Spawn Point")]
+    [SerializeField] bool raycastSpawnPoint;
     [SerializeField] Vector2 spawnPoint;
 
     [Space, Header("Stats")]
@@ -47,6 +49,11 @@ public partial class Player : MonoBehaviour
     [SerializeField] ParticleSystem jumpParticle;
     [SerializeField] ParticleSystem slideParticle;
     [SerializeField] ParticleSystem wallJumpParticle;
+
+    [Header("Transition")]
+    [SerializeField] TransitionAnimator deathTransition;
+    [SerializeField] TransitionAnimator loadTransition;
+
     AnimationScript anim;
     Collision coll;
     float coyoteTimeTimer;
@@ -60,6 +67,8 @@ public partial class Player : MonoBehaviour
         coll = GetComponent<Collision>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<AnimationScript>();
+        deathTransition = GetComponentInChildren<TransitionAnimator>();
+        loadTransition = GetComponentInChildren<TransitionAnimator>();
 
         transform.position = spawnPoint;
     }
@@ -168,10 +177,21 @@ public partial class Player : MonoBehaviour
 
     void OnValidate()
     {
-        // Set the spawnPoint position to the X value, but the Y value of a raycast to the ground
-        if (Application.isPlaying) return;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
-        spawnPoint = new (spawnPoint.x, hit.point.y + .5f);
+        if (!raycastSpawnPoint) return;
+
+        // Perform a raycast downwards from the spawn point to find the ground
+        RaycastHit2D hit = Physics2D.Raycast(new (spawnPoint.x, spawnPoint.y), Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
+
+        if (hit.collider != null)
+
+            // Set the spawn point's Y position to the ground position
+            spawnPoint = new (spawnPoint.x, hit.point.y + 1f);
+        else
+
+            // If no ground is found, set the spawn point to the default value
+            spawnPoint = new (spawnPoint.x, 0f);
+
+        transform.position = spawnPoint;
     }
 
     public override string ToString()
@@ -321,7 +341,7 @@ public partial class Player : MonoBehaviour
     public void Death() =>
 
         //anim.SetTrigger("death");
-        transform.position = SpawnPoint;
+        deathTransition.Play();
 
     #region Properties
     public bool CanMove => canMove;
