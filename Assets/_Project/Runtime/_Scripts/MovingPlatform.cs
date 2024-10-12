@@ -9,10 +9,14 @@ public class MovingPlatform : MonoBehaviour
 
 
     [SerializeField] GameObject path;
+
+    [SerializeField] bool loopPath = true;
+
     private List<Vector2> _pathPoints = new List<Vector2>();
 
     private int _prevPosIndex;
     private int _nextPosIndex;
+    private int _pathTransitionDir = 1;
 
 
 
@@ -40,12 +44,40 @@ public class MovingPlatform : MonoBehaviour
         Vector3 toGoal = goal - transform.position;
         transform.position = Vector3.MoveTowards(transform.position, goal, _movementSpeed * Time.deltaTime);
 
+        Debug.Log(_nextPosIndex);
+
         if (toGoal.magnitude <= 0.02f)
         {
-            if (_nextPosIndex < _pathPoints.Count - 1)
+            if (_nextPosIndex == _pathPoints.Count - 1)
+            {
+                if (!loopPath)
+                {
+                    _pathTransitionDir *= -1;
+                    _nextPosIndex += _pathTransitionDir;
+                }
+                else
+                {
+                    _nextPosIndex = 0;
+                    _pathTransitionDir = 1;
+                }
+            }
+            else if (_nextPosIndex < _pathPoints.Count - 1 && _nextPosIndex > 0)
             {
                 _prevPosIndex = _nextPosIndex;
-                _nextPosIndex++;
+                _nextPosIndex += _pathTransitionDir;
+            }
+            else if (_nextPosIndex == 0)
+            {
+                if (!loopPath)
+                {
+                    _pathTransitionDir *= -1;
+                    _nextPosIndex += _pathTransitionDir;
+                }
+                else
+                {
+                    _pathTransitionDir = 1;
+                    _nextPosIndex += _pathTransitionDir;
+                }
             }
         }
     }
