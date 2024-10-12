@@ -9832,7 +9832,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14853,6 +14852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f4455ccd6f8f940bbf856d968a3c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastSpawnPoint: 1
   spawnPoint: {x: -17.7, y: -7.999977}
   speed: 10
   jumpForce: 16
@@ -20231,7 +20231,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

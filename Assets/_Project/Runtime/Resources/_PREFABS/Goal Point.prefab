@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 3449736907645016141}
   - component: {fileID: 2580248217909264720}
   m_Layer: 0
-  m_Name: 'Goal: KorbenSanbox'
+  m_Name: 'Goal: Tutorial Part 1'
   m_TagString: GoalTransition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
