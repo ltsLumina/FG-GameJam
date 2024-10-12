@@ -50,10 +50,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _PixelsAlongX: 200
-    - _PixelsAlongY: 120
+    - _PixelsAlongX: 240
+    - _PixelsAlongY: 240
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.16352186, g: 0.16352186, b: 0.16352186, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
