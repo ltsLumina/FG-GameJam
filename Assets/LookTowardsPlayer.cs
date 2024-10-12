@@ -6,6 +6,8 @@ public class LookTowardsPlayer : MonoBehaviour
 {
     [SerializeField] private GameObject spiderBody;
 
+    [SerializeField] private bool lookTowardsPlayer;
+
     private Player player;
 
     private void Start()
@@ -15,7 +17,10 @@ public class LookTowardsPlayer : MonoBehaviour
 
     void Update()
     {
-        transform.right = player.transform.position - transform.position;
+        if (lookTowardsPlayer)
+        {
+            transform.right = player.transform.position - transform.position;
+        }
         transform.position = spiderBody.transform.position;
     }
 }
