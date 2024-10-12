@@ -85,7 +85,7 @@ public class SunAnimation : MonoBehaviour
         for(int i = 0; i < legAmount; i++)
         {
 
-            RaycastHit2D legHit = Physics2D.Raycast(transform.position, legs[i].transform.position - transform.position, Mathf.Infinity);
+            RaycastHit2D legHit = Physics2D.Raycast(transform.position, legs[i].transform.position - transform.position, Mathf.Infinity, groundLayer);
 
             if(legHit.collider != null)
             {
@@ -95,6 +95,7 @@ public class SunAnimation : MonoBehaviour
                 if (!hasLineOfSight && legs[i].gameObject.activeSelf)
                 {
                     FindNewAnchor(legs[i]);
+                    //Debug.Log(i);
                     //Debug.DrawLine(transform.position, legHit.point, Color.red);
                 }
                 else
