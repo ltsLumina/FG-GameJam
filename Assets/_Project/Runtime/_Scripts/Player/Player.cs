@@ -9,10 +9,7 @@ using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour
 {
-    [Header("Spawn Point")]
-    [SerializeField] bool raycastSpawnPoint;
-    [SerializeField] Vector2 spawnPoint;
-
+    readonly static int IsDead = Animator.StringToHash("isDead");
     [Space, Header("Stats")]
     [SerializeField] float speed = 10f;
     [SerializeField] float jumpForce = 15f;
@@ -22,6 +19,7 @@ public partial class Player : MonoBehaviour
     [SerializeField] float wallJumpMult = 1.15f;
     [SerializeField] float wallJumpLerp = 1f;
     [SerializeField] float dashSpeed = 25f;
+    [SerializeField] float verticalDashSpeed = 15f;
     [SerializeField] float dashDrag = 3;
 
     [Space, Header("Coyote Time")]
@@ -72,7 +70,8 @@ public partial class Player : MonoBehaviour
         deathTransition = GetComponentInChildren<TransitionAnimator>();
         loadTransition = GetComponentInChildren<TransitionAnimator>();
 
-        transform.position = spawnPoint;
+        rb.gravityScale = gravityScale;
+        transform.position = SpawnPoint;
     }
 
     // void OnGUI()
@@ -88,9 +87,6 @@ public partial class Player : MonoBehaviour
     void Update()
     {
         if (jumpBufferTimer > 0) jumpBufferTimer -= Time.deltaTime;
-
-        {
-        }
 
         float x = MoveInput.x;
         float y = MoveInput.y;
@@ -141,8 +137,6 @@ public partial class Player : MonoBehaviour
             rb.velocity = new (rb.velocity.x, y * (speed * speedModifier));
         }
 
-        else { rb.gravityScale = gravityScale; }
-
         if (coll.OnWall && !coll.OnGround)
             if (x != 0 && !wallGrab)
             {
@@ -177,30 +171,7 @@ public partial class Player : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(spawnPoint, new (1, 1, 1));
-    }
-
-    void OnValidate()
-    {
-        if (!raycastSpawnPoint) return;
-
-        // Perform a raycast downwards from the spawn point to find the ground
-        RaycastHit2D hit = Physics2D.Raycast(new (spawnPoint.x, spawnPoint.y), Vector2.down, Mathf.Infinity, LayerMask.GetMask("Ground"));
-
-        if (hit.collider != null)
-
-            // Set the spawn point's Y position to the ground position
-            spawnPoint = new (spawnPoint.x, hit.point.y + 1f);
-        else
-
-            // If no ground is found, set the spawn point to the default value
-            spawnPoint = new (spawnPoint.x, 0f);
-
-        transform.position = spawnPoint;
-    }
+    void OnValidate() => deathTransition.sceneNameToLoad = SceneManagerExtended.ActiveSceneName;
 
     public override string ToString()
     {
@@ -245,24 +216,33 @@ public partial class Player : MonoBehaviour
         rb.velocity = Vector2.zero;
         var dir = new Vector2(x, y);
 
-        rb.velocity += dir.normalized * dashSpeed;
-        StartCoroutine(DashWait());
+        // Use verticalDashSpeed if dashing straight up
+        float dashSpeedToUse = x == 0 && y > 0 ? verticalDashSpeed : dashSpeed;
+        rb.velocity += dir.normalized * dashSpeedToUse;
+
+        StartCoroutine(DashWait(x, y));
     }
 
-    IEnumerator DashWait()
+    IEnumerator DashWait(float x = 0, float y = 0)
     {
         FindObjectOfType<GhostTrail>().ShowGhost();
         StartCoroutine(GroundDash());
         DOVirtual.Float(dashDrag, 0, .8f, RigidbodyDrag);
 
         dashParticle.Play();
-        rb.gravityScale = 0;
+
+        // If dashing straight down, don't disable gravity, else set to 0
+        if (Mathf.Approximately(y, -1)) rb.gravityScale = 3;
+        else rb.gravityScale = 0;
+
         GetComponent<BetterJumping>().enabled = false;
         wallJumped = true;
         isDashing = true;
+        enabled = false;
 
         yield return new WaitForSeconds(.3f);
 
+        enabled = true;
         dashParticle.Stop();
         rb.gravityScale = gravityScale;
         GetComponent<BetterJumping>().enabled = true;
@@ -272,7 +252,7 @@ public partial class Player : MonoBehaviour
 
     IEnumerator GroundDash()
     {
-        yield return new WaitForSeconds(.15f);
+        yield return new WaitForSeconds(.25f);
         if (coll.OnGround) hasDashed = false;
     }
 
@@ -355,12 +335,14 @@ public partial class Player : MonoBehaviour
 
     public void Death()
     {
-        if (!enabled) return;
+        if (anim.GetComponent<Animator>().GetBool(IsDead)) return;
 
         anim.SetTrigger("death");
-        anim.enabled = false;
+        anim.GetComponent<Animator>().SetBool(IsDead, true);
+
         enabled = false;
         StopAllCoroutines();
+
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
 
@@ -370,8 +352,7 @@ public partial class Player : MonoBehaviour
 
         IEnumerator Delay()
         {
-            float animDuration = anim.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
-            yield return new WaitForSeconds(animDuration * .75f);
+            yield return new WaitForSeconds(.75f);
             deathTransition.Play();
         }
     }
@@ -382,7 +363,6 @@ public partial class Player : MonoBehaviour
     public bool WallJumped => wallJumped;
     public bool WallSlide => wallSlide;
     public bool IsDashing => isDashing;
-
-    public Vector2 SpawnPoint => spawnPoint;
+    public Vector2 SpawnPoint => FindObjectOfType<SpawnPoint>().Position;
     #endregion
 }
