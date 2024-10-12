@@ -1,26 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#region
 using UnityEngine;
 using UnityEngine.InputSystem;
+#endregion
 
 public class BetterJumping : MonoBehaviour
 {
+    [SerializeField] float fallMultiplier = 2.5f;
+    [SerializeField] float lowJumpMultiplier = 2f;
+
     Player player;
     Rigidbody2D rb;
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
 
     void Start()
     {
         player = GetComponentInParent<Player>();
-        rb     = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
         var jumpAction = player.GetComponentInChildren<PlayerInput>().actions["Jump"];
 
-        
         switch (rb.velocity.y)
         {
             case < 0:

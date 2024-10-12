@@ -195,11 +195,13 @@ public class DebugWindow : EditorWindow
 
     static void DrawSceneLoadButtons(Action<int> sceneAction)
     {
-        if (Button("Main Menu", Height(30))) sceneAction(0);
-        if (Button("Tutorial 1", Height(30))) sceneAction(1);
-        if (Button("Tutorial 2", Height(30))) sceneAction(2);
-        if (Button("Tutorial 3", Height(30))) sceneAction(3);
-        if (Button("Level 1", Height(30))) sceneAction(4);
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            string sceneName = Path.GetFileNameWithoutExtension(scenePath);
+
+            if (Button(sceneName, Height(30))) sceneAction(i);
+        }
     }
 
     static void DrawMidBanner()

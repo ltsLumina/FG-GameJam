@@ -1,5 +1,4 @@
 #region
-using DG.Tweening;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -36,22 +35,7 @@ public class StaticSunlight : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent(out Player player))
-        {
-            var spriteRenderer = player.GetComponentInChildren<SpriteRenderer>();
-            Sequence sequence = DOTween.Sequence();
-
-            player.Death();
-
-            // sequence.AppendCallback
-            // (() =>
-            // {
-            //     Logger.LogWarning("Player has entered the sunlight. \nRespawning player at spawn point.");
-            //     player.Death();
-            // });
-
-            //sequence.Append(spriteRenderer.DOFade(0, .5f));
-        }
+        if (other.TryGetComponent(out Player player)) player.Death();
     }
 
     void OnValidate()
