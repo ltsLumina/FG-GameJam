@@ -51,7 +51,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _PixelsAlongX: 240
-    - _PixelsAlongY: 240
+    - _PixelsAlongY: 120
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
