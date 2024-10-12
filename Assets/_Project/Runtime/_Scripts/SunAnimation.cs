@@ -15,7 +15,7 @@ public class SunAnimation : MonoBehaviour
 
     [SerializeField] int rayAmount;
 
-    List<LineRenderer> legs = new List<LineRenderer>();
+    [SerializeField] List<LineRenderer> legs = new List<LineRenderer>();
 
     [SerializeField] int FOV;
 
@@ -27,11 +27,14 @@ public class SunAnimation : MonoBehaviour
 
     [SerializeField] Transform legManager;
 
+    private CircleCollider2D circleCol;
+
     Vector3 lastPos;
 
 
     private void Start()
     {
+        circleCol = GetComponent<CircleCollider2D>();
 
         for(int i = 0; i < legAmount; i++)
         {
@@ -49,6 +52,8 @@ public class SunAnimation : MonoBehaviour
         velocity = (transform.position - lastPos).normalized;
         lastPos = transform.position;
 
+        circleCol.radius = legLenght + 1;
+
         var newAngle = -Vector3.SignedAngle(velocity, new Vector3(1,0,0), Vector3.forward);
 
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, newAngle));
@@ -64,7 +69,7 @@ public class SunAnimation : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Debug.DrawRay(transform.position, newDir, Color.green);
+
                 var legCheck = Physics2D.CircleCast(hit.point, legSpacing, Vector2.zero, 0, legLayer);
 
                 if(unusedLegs.Count > 0 && !legCheck)
@@ -74,14 +79,31 @@ public class SunAnimation : MonoBehaviour
                     unusedLegs.Remove(unusedLegs[0]);
                 }
             }
-            else
-            {
-                Debug.DrawRay(transform.position, newDir, Color.red);
-            }
+
         }
 
         for(int i = 0; i < legAmount; i++)
         {
+
+            RaycastHit2D legHit = Physics2D.Raycast(transform.position, legs[i].transform.position - transform.position, Mathf.Infinity);
+
+            if(legHit.collider != null)
+            {
+                bool hasLineOfSight = Physics2D.CircleCast(legHit.point, 0.2f, Vector2.zero, 0, legLayer);
+                
+
+                if (!hasLineOfSight && legs[i].gameObject.activeSelf)
+                {
+                    FindNewAnchor(legs[i]);
+                    //Debug.DrawLine(transform.position, legHit.point, Color.red);
+                }
+                else
+                {
+
+                    //Debug.DrawLine(transform.position, legHit.point, Color.green);
+                }
+            }
+
             for (int j = 0; j < 2; j++)
             {
                 legs[i].SetPosition(0, transform.position);
@@ -91,6 +113,7 @@ public class SunAnimation : MonoBehaviour
             }
         }
     }
+
 
 
     private void FindNewAnchor(LineRenderer aLeg)
