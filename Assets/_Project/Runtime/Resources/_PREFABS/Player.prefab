@@ -14787,7 +14787,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   loadSceneAtEnd: 1
-  sceneNameToLoad: Level 2
+  sceneNameToLoad: Level 3
   sceneLoadMode: 0
   fadeToCamera: 0
   mainCamera: {fileID: 0}
