@@ -6,6 +6,7 @@ TagManager:
   tags:
   - sunLeg
   - GoalTransition
+  - movingPlatform
   layers:
   - Default
   - TransparentFX
