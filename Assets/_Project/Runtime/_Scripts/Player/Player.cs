@@ -232,8 +232,7 @@ public partial class Player : MonoBehaviour
         dashParticle.Play();
 
         // If dashing straight down, don't disable gravity, else set to 0
-        if (Mathf.Approximately(y, -1)) rb.gravityScale = 3;
-        else rb.gravityScale = 0;
+        rb.gravityScale = Mathf.Approximately(y, -1) ? 3 : 0;
 
         GetComponent<BetterJumping>().enabled = false;
         wallJumped = true;

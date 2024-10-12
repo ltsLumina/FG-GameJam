@@ -14860,7 +14860,7 @@ MonoBehaviour:
   wallJumpMult: 0.9
   wallJumpLerp: 2
   dashSpeed: 25
-  verticalDashSpeed: 15
+  verticalDashSpeed: 20
   dashDrag: 3.5
   coyoteTimeDuration: 0.15
   canMove: 1
