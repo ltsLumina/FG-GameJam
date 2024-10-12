@@ -498,8 +498,9 @@ public class TransitionAnimator : MonoBehaviour
         {
             bool inProgress = profile.invert ? progress < 1f : progress > 0;
             if (fadeToCamera && progress >= 1f) inProgress = false;
-            canvas.enabled = inProgress;
+            canvas.enabled = inProgress && Application.isPlaying;
         }
+        else { canvas.enabled = Application.isPlaying; }
     }
 
     void CaptureCameras()
