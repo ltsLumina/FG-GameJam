@@ -57,12 +57,19 @@ public class SunAnimation : MonoBehaviour
     private void FixedUpdate()
     {
 
+        float tempFOV = FOV;
+
         if(transform.position != lastPos)
         {
             velocity = (transform.position - lastPos).normalized;
         }
 
         lastPos = transform.position;
+
+        if (unusedLegs.Count > legAmount - 3)
+        {
+            tempFOV = 360;
+        }
 
         circleCol.radius = legLenght + 1;
 
@@ -73,7 +80,7 @@ public class SunAnimation : MonoBehaviour
         for (int i = 0; i < rayAmount; i++)
         {
 
-            float rad = ((FOV / rayAmount * i) - (FOV/2 - newAngle)) * Mathf.Deg2Rad;
+            float rad = ((tempFOV / rayAmount * i) - (tempFOV / 2 - newAngle)) * Mathf.Deg2Rad;
 
             Vector2 newDir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
 
