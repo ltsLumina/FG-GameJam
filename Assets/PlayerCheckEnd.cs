@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+#region
 using UnityEngine;
+using UnityEngine.InputSystem;
+#endregion
 
 public class PlayerCheckEnd : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("the player should win here");
             other.gameObject.GetComponent<Player>().enabled = false;
-            other.gameObject.GetComponent<BetterJumping>().enabled = false;
+            other.gameObject.GetComponentInChildren<PlayerInput>().enabled = false;
         }
     }
 }
