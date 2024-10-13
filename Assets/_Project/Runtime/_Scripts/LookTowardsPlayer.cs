@@ -19,7 +19,9 @@ public class LookTowardsPlayer : MonoBehaviour
     {
         if (lookTowardsPlayer)
         {
-            transform.right = player.transform.position - transform.position;
+            Vector3 toPLayer = player.transform.position - transform.position;
+            var newAngle = -Vector3.SignedAngle(toPLayer, new Vector3(1, 0, 0), Vector3.forward);
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, newAngle - 90));
         }
         transform.position = spiderBody.transform.position;
     }
