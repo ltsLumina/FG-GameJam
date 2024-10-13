@@ -1,33 +1,37 @@
-#region
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-#endregion
 
 public class FireflyManager : MonoBehaviour
 {
-    [SerializeField] int numberOfFireflies;
+    [SerializeField] int NumberOfFireflies;
     [SerializeField] float Radius;
     [SerializeField] float Speed;
 
-    GameObject _fireflyPrefab;
+    private GameObject _fireflyPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         _fireflyPrefab = Resources.Load<GameObject>("_PREFABS/Firefly");
-
-        for (int i = 0; i < numberOfFireflies; i++)
+        for (int i = 0; i < NumberOfFireflies; i++)
         {
-            var firefly = Instantiate(_fireflyPrefab, transform).GetComponent<Firefly>();
+            Firefly firefly = Instantiate(_fireflyPrefab, transform).GetComponent<Firefly>();
             firefly.Speed = Speed;
             firefly.Radius = Radius;
+
         }
     }
 
-    void OnDrawGizmos()
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, Radius);
     }
-
-    void OnValidate() { name = $"Fireflies ({numberOfFireflies}x)"; }
 }

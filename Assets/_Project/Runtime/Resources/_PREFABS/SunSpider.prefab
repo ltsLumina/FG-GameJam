@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5872114718954117666}
+  - component: {fileID: 7513902951077042680}
   - component: {fileID: 5583929785181540937}
   m_Layer: 0
-  m_Name: Kill Light
+  m_Name: Static Sunlight - (-15.27, 15.29, 0.00) - #0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,13 +26,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1264619661173291935}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7150189, w: 0.6991051}
   m_LocalPosition: {x: 0.39, y: -0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4566469699119440297}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -91.29}
+--- !u!114 &7513902951077042680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264619661173291935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff92a847c887f904d8bb4e8744d07d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5583929785181540937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,10 +81,10 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 5.61
-  m_PointLightOuterAngle: 14.23
-  m_PointLightInnerRadius: 13.277077
-  m_PointLightOuterRadius: 15
+  m_PointLightInnerAngle: 9.100001
+  m_PointLightOuterAngle: 29.97
+  m_PointLightInnerRadius: 20.171528
+  m_PointLightOuterRadius: 33.551632
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -91,6 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4769929695437122785}
+  - component: {fileID: 7928961214411396667}
   - component: {fileID: 6753308518335453155}
   m_Layer: 0
   m_Name: Static Sunlight - (-15.27, 15.29, 0.00) - #0
@@ -107,13 +121,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912652972999135612}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.69520235, w: 0.7188141}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7150189, w: 0.6991051}
   m_LocalPosition: {x: 0.39, y: -0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4566469699119440297}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -91.29}
+--- !u!114 &7928961214411396667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912652972999135612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff92a847c887f904d8bb4e8744d07d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6753308518335453155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,10 +176,10 @@ MonoBehaviour:
   m_LocalBounds:
     m_Center: {x: 0, y: -0.00000011920929, z: 0}
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
-  m_PointLightInnerAngle: 12.66
-  m_PointLightOuterAngle: 49.08
-  m_PointLightInnerRadius: 13.528727
-  m_PointLightOuterRadius: 15
+  m_PointLightInnerAngle: 12.19
+  m_PointLightOuterAngle: 59.52145
+  m_PointLightInnerRadius: 21.63384
+  m_PointLightOuterRadius: 33.551632
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -275,12 +301,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   legLenght: 8
-  legAmount: 8
+  legAmount: 16
   rayAmount: 20
   FOV: 100
   legSpacing: 2
-  bendSpeed: 25
-  stretchSpeed: 35
+  bendSpeed: 0
+  stretchSpeed: 0
   sunLeg: {fileID: 5522967174724504027, guid: f37d75dbf527b0441936909e95157a96, type: 3}
 --- !u!114 &5081344583608055922
 MonoBehaviour:
@@ -368,7 +394,7 @@ Animator:
   m_GameObject: {fileID: 2747429978477941409}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b6ebb4f4f456fab42a7c344c0e30d24f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 66f9b167959dfb3419a8e42a8b4998e6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
