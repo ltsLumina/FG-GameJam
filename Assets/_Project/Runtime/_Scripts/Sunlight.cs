@@ -1,12 +1,14 @@
 #region
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 #endregion
 
+[Obsolete("Use the new PlayerDetection script instead.")]
 public class Sunlight : MonoBehaviour
 {
     // Change this if you dont want the player to die on collision with the sunlight
-    const bool debugToggle = false;
+    const bool debugToggle = true;
 
     [SerializeField] GameObject path;
     [SerializeField] List<float> _pathTimes = new ();
@@ -24,6 +26,8 @@ public class Sunlight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!path) return;
+
         _pathPoints.Clear();
 
         foreach (Transform childTransform in path.transform)
@@ -52,6 +56,8 @@ public class Sunlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!path) return;
+
         Vector3 goal = new Vector3(_pathPoints[_nextPosIndex].x, _pathPoints[_nextPosIndex].y, 0);
         Vector3 toGoal = goal - transform.position;
         transform.position = Vector3.MoveTowards(transform.position, goal, _pathSpeeds[_nextPosIndex - 1] * Time.deltaTime);
@@ -71,6 +77,7 @@ public class Sunlight : MonoBehaviour
 
     void FixedUpdate()
     {
+        _player = FindObjectOfType<Player>();
         RaycastHit2D ray = Physics2D.Raycast(transform.position, _player.transform.position - transform.position);
 
         if (ray.collider != null)
@@ -100,6 +107,8 @@ public class Sunlight : MonoBehaviour
 
     void OnValidate()
     {
+        if (!path) return;
+
         _pathPoints.Clear();
 
         foreach (Transform childTransform in path.transform)

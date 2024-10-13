@@ -218,10 +218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostsParent: {fileID: 4489349987721174545}
-  trailColor: {r: 1, g: 0.36320752, b: 0.60256857, a: 1}
-  fadeColor: {r: 1, g: 0.36320752, b: 0.60256857, a: 0}
+  trailColor: {r: 0.44705886, g: 0.44705886, b: 0.44705886, a: 1}
+  fadeColor: {r: 0.44705886, g: 0.44705886, b: 0.44705886, a: 0}
   ghostInterval: 0.05
-  fadeTime: 0.5
+  fadeTime: 0.25
 --- !u!1 &5246798812997936741
 GameObject:
   m_ObjectHideFlags: 0

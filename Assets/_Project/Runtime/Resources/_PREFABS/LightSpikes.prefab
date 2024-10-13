@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.04705883, g: 0.8470589, b: 0.9921569, a: 1}
+  m_Color: {r: 0, g: 0.84809756, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 518308401505536643}
   - component: {fileID: 8021762877649363594}
   m_Layer: 2
-  m_Name: Spike 3
+  m_Name: Spike 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.04705883, g: 0.8470589, b: 0.9921569, a: 1}
+  m_Color: {r: 0, g: 0.84809756, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 5491644039004732677}
   - component: {fileID: 8572686470331029356}
   m_Layer: 2
-  m_Name: Spike 2
+  m_Name: Spike 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,7 +242,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.04705883, g: 0.8470589, b: 0.9921569, a: 1}
+  m_Color: {r: 0, g: 0.84809756, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 2915437480796675128}
   - component: {fileID: 3917708002346995405}
   m_Layer: 2
-  m_Name: Spike 1
+  m_Name: Spike 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.04705883, g: 0.8470589, b: 0.9921569, a: 1}
+  m_Color: {r: 0, g: 0.84809756, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -367,10 +367,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 9125404950894788312}
+  - {fileID: 518308401505536643}
   - {fileID: 2915437480796675128}
   - {fileID: 5491644039004732677}
-  - {fileID: 518308401505536643}
-  - {fileID: 9125404950894788312}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5360861935655251843

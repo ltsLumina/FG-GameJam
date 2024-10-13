@@ -1,24 +1,14 @@
 #region
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 #endregion
 
+[DisallowMultipleComponent]
 public class StaticSunlight : MonoBehaviour
 {
     int index;
 
-    void OnEnable()
-    {
 #if UNITY_EDITOR
-
-        // Move this component to the top of the component list
-        Component[] components = gameObject.GetComponents(typeof(Component));
-
-        for (int i = 0; i < components.Length - 1; i++) { ComponentUtility.MoveComponentUp(this); }
-#endif
-    }
-
     void OnDrawGizmos()
     {
         // draw the name of the object
@@ -32,6 +22,7 @@ public class StaticSunlight : MonoBehaviour
         style.alignment = TextAnchor.MiddleCenter;
         Handles.Label(transform.position + new Vector3(0, 1.5f), $"{transform.position} - #{index}", style);
     }
+#endif
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -47,6 +38,7 @@ public class StaticSunlight : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 public static class MenuIntegration
 {
     [MenuItem("GameObject/Light/Static Sunlight")]
@@ -74,3 +66,4 @@ public static class MenuIntegration
         return o;
     }
 }
+#endif
