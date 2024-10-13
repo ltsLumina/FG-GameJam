@@ -47,6 +47,7 @@ public class Killplane : MonoBehaviour
                             else
                             {
                                 deaths = 0;
+                                Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
                                 player.Death(Player.CauseOfDeath.Killplane);
                             }
 
@@ -55,9 +56,14 @@ public class Killplane : MonoBehaviour
 #endif
                     }
 
+                    Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
                     player.Death(Player.CauseOfDeath.Killplane);
                 }
-                else { player.transform.position = Player.SpawnPoint; }
+                else
+                {
+                    Logger.LogWarning("Player has fallen below the kill plane. \nRespawning player at spawn point.");
+                    player.transform.position = Player.SpawnPoint;
+                }
             }
         }
         else { playerCountedAsDead = false; }

@@ -26,16 +26,17 @@ public class PlayerDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 toPlayer = _player.transform.position - transform.position;
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, toPlayer);
+        Vector3 toPLayer = _player.transform.position - transform.position;
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, toPLayer);
 
         if (ray.collider != null)
         {
-            bool hasLineOfSight = ray.collider.CompareTag("Player") && IsPlayerInView();
+            bool haslineOfSight = ray.collider.CompareTag("Player") && IsPlayerInView();
 
-            if (hasLineOfSight)
+            if (haslineOfSight)
             {
                 _player.Death();
+                Debug.Log("Player is in view");
                 Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.green);
             }
             else { Debug.DrawRay(transform.position, _player.transform.position - transform.position, Color.red); }

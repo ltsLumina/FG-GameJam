@@ -1,20 +1,9 @@
 #region
-using MelenitasDev.SoundsGood;
 using UnityEngine;
 #endregion
 
 public class GameManager : SingletonPersistent<GameManager>
 {
-    void Start()
-    {
-        var intro = new Music(Track.intro);
-        var music = new Music(Track.music);
-        intro.SetOutput(Output.Music);
-        music.SetOutput(Output.Music);
-
-        intro.Play();
-        intro.OnComplete(() => music.Play());
-    }
     #region Pause/Resume
     public static bool IsPaused { get; private set; }
 

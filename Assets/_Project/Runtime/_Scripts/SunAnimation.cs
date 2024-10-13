@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SunAnimation : MonoBehaviour
 {
+
     [SerializeField] bool lookingAtPlayer;
 
     [SerializeField] LayerMask groundLayer;
@@ -15,33 +17,34 @@ public class SunAnimation : MonoBehaviour
 
     [SerializeField] int rayAmount;
 
+    List<LineRenderer> legs = new List<LineRenderer>();
+
     [SerializeField] int FOV;
 
     [SerializeField] float legSpacing;
+
+    List<LineRenderer> unusedLegs = new List<LineRenderer>();
 
     [Header("The speed of the leg animations")]
     [SerializeField] float bendSpeed;
 
     [SerializeField] float stretchSpeed;
 
+    private List<legOnPlatform> legOnPlatforms = new List<legOnPlatform>();
+
     [SerializeField] LineRenderer sunLeg;
 
     private CircleCollider2D circleCol;
 
-    Vector3 lastPos;
-
-    private List<legOnPlatform> legOnPlatforms = new List<legOnPlatform>();
+    private List<Vector2> spiderBend = new List<Vector2>();
     private List<Vector2> legPos = new List<Vector2>();
 
-    List<LineRenderer> legs = new List<LineRenderer>();
+    Vector3 velocity = Vector3.zero;
+
+    Vector3 lastPos;
 
     private Player player;
 
-    private List<Vector2> spiderBend = new List<Vector2>();
-
-    List<LineRenderer> unusedLegs = new List<LineRenderer>();
-
-    Vector3 velocity = Vector3.zero;
 
     private void Start()
     {
@@ -49,7 +52,7 @@ public class SunAnimation : MonoBehaviour
 
         var legManager = new GameObject("legManager");
 
-        for (int i = 0; i < legAmount; i++)
+        for(int i = 0; i < legAmount; i++)
         {
             legs.Add(Instantiate(sunLeg, legManager.transform));
             FindNewAnchor(legs[i]);
@@ -57,47 +60,60 @@ public class SunAnimation : MonoBehaviour
             legPos.Add(new Vector2());
             spiderBend.Add(new Vector2());
 
-            for (int j = 0; j < 3; j++) { legs[i].SetPosition(j, transform.position); }
+            for(int j = 0; j < 3; j++)
+            {
+                legs[i].SetPosition(j, transform.position);
+            }
         }
 
         transform.parent = legManager.transform;
 
         player = FindObjectOfType<Player>();
+
     }
 
     private void FixedUpdate()
     {
+
         float tempFOV = FOV;
 
-        if (transform.position != lastPos) { velocity = (transform.position - lastPos); }
+        if(transform.position != lastPos)
+        {
+            velocity = (transform.position - lastPos);
+        }
 
         lastPos = transform.position;
 
-        if (unusedLegs.Count > legAmount - 3) { tempFOV = 360; }
+        if (unusedLegs.Count > legAmount - 3)
+        {
+            tempFOV = 360;
+        }
 
         circleCol.radius = legLenght + 1;
 
-        var newAngle = -Vector3.SignedAngle(velocity.normalized, new Vector3(1, 0, 0), Vector3.forward);
+        var newAngle = -Vector3.SignedAngle(velocity.normalized, new Vector3(1,0,0), Vector3.forward);
 
         //transform.rotation = Quaternion.Euler(new Vector3(0, 0, newAngle));
 
         for (int i = 0; i < legAmount; i++)
         {
+
             RaycastHit2D legHit = Physics2D.Raycast(transform.position, legs[i].transform.position - transform.position, Mathf.Infinity, groundLayer);
 
             if (legHit.collider != null)
             {
                 bool hasLineOfSight = Physics2D.CircleCast(legHit.point, 0.2f, Vector2.zero, 0, legLayer);
 
+
                 if (!hasLineOfSight && legOnPlatforms[i].Active)
                 {
                     FindNewAnchor(legs[i]);
-
                     //Debug.Log(i);
                     //Debug.DrawLine(transform.position, legHit.point, Color.red);
                 }
                 else
                 {
+
                     //Debug.DrawLine(transform.position, legHit.point, Color.green);
                 }
             }
@@ -127,6 +143,7 @@ public class SunAnimation : MonoBehaviour
 
         for (int i = 0; i < rayAmount; i++)
         {
+
             float rad = ((tempFOV / rayAmount * i) - (tempFOV / 2 - newAngle)) * Mathf.Deg2Rad;
 
             Vector2 newDir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
@@ -137,26 +154,30 @@ public class SunAnimation : MonoBehaviour
 
             if (hit.collider != null)
             {
+
                 var legCheck = Physics2D.CircleCast(hit.point, legSpacing, Vector2.zero, 0, legLayer);
 
-                if (unusedLegs.Count > 0 && !legCheck)
-                {
+                if(unusedLegs.Count > 0 && !legCheck)
+                {                 
                     //unusedLegs[0].gameObject.SetActive(true);
                     unusedLegs[0].gameObject.GetComponent<legOnPlatform>().Active = true;
 
                     unusedLegs[0].gameObject.transform.position = hit.point;
-                    unusedLegs.Remove(unusedLegs[0]);
+                    Debug.Log(unusedLegs.Remove(unusedLegs[0]));
                 }
             }
 
-            if (lookingAtPlayer) { transform.right = player.transform.position - transform.position; }
+            if (lookingAtPlayer)
+            {
+                transform.right = player.transform.position - transform.position;
+            }
+
         }
+
+        
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("sunLeg") && other.gameObject.GetComponent<legOnPlatform>().Active) { FindNewAnchor(other.GetComponent<LineRenderer>()); }
-    }
+
 
     private void FindNewAnchor(LineRenderer aLeg)
     {
@@ -167,9 +188,14 @@ public class SunAnimation : MonoBehaviour
         legPlatform.OldParent();
     }
 
-    void DisableAnim()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        var anim = GetComponent<Animator>();
-        anim.enabled = false;
+        if (other.CompareTag("sunLeg") && other.gameObject.GetComponent<legOnPlatform>().Active)
+        {
+            FindNewAnchor(other.GetComponent<LineRenderer>());
+        }
+        
     }
+
+
 }

@@ -1,10 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LightGate : MonoBehaviour
 {
+    LightGateButton _gateButton;
     [SerializeField] GameObject Beam;
     BoxCollider2D _bc;
-    LightGateButton _gateButton;
 
     private bool _isOpen = false;
 
@@ -18,17 +20,16 @@ public class LightGate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (_gateButton.Active)
+        if (_gateButton.Active)
         {
-            case true:
-                _bc.enabled = false;
-                Beam.SetActive(false);
-                break;
-
-            case false:
-                _bc.enabled = true;
-                Beam.SetActive(true);
-                break;
+            _bc.enabled = false;
+            Beam.SetActive(false);
         }
+        else if (!_gateButton.Active)
+        {
+            _bc.enabled = true;
+            Beam.SetActive(true);
+        }
+
     }
 }

@@ -14787,7 +14787,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   loadSceneAtEnd: 1
-  sceneNameToLoad: Level 5
+  sceneNameToLoad: Oscar
   sceneLoadMode: 0
   fadeToCamera: 0
   mainCamera: {fileID: 0}
@@ -14912,6 +14912,7 @@ MonoBehaviour:
   onRightWall: 0
   onLeftWall: 0
   wallFacing: 0
+  onMovingPlatform: 0
   collisionRadius: 0.1
   bottomOffset: {x: 0, y: -0.65}
   rightOffset: {x: 0.5, y: -0.33}
