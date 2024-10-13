@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Oscar.unity
     guid: 348f51f40abc2e640b1b9a3d909fc53b
   - enabled: 1
