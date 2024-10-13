@@ -14787,7 +14787,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   loadSceneAtEnd: 1
-  sceneNameToLoad: Tutorial Part 2
+  sceneNameToLoad: Oscar
   sceneLoadMode: 0
   fadeToCamera: 0
   mainCamera: {fileID: 0}

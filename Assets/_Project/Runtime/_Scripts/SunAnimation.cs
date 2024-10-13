@@ -59,6 +59,11 @@ public class SunAnimation : MonoBehaviour
             legOnPlatforms.Add(legs[i].GetComponent<legOnPlatform>());
             legPos.Add(new Vector2());
             spiderBend.Add(new Vector2());
+
+            for(int j = 0; j < 3; j++)
+            {
+                legs[i].SetPosition(j, transform.position);
+            }
         }
 
         transform.parent = legManager.transform;
