@@ -12,6 +12,11 @@ public class legOnPlatform : MonoBehaviour
     {
         oldParent = transform.parent;
         myLine = GetComponent<LineRenderer>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            myLine.SetPosition(i, transform.position);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

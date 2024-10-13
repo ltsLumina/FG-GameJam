@@ -303,9 +303,10 @@ MonoBehaviour:
   legLenght: 8
   legAmount: 16
   rayAmount: 20
-  legs: []
   FOV: 100
   legSpacing: 2
+  bendSpeed: 0
+  stretchSpeed: 0
   sunLeg: {fileID: 5522967174724504027, guid: f37d75dbf527b0441936909e95157a96, type: 3}
 --- !u!114 &5081344583608055922
 MonoBehaviour:
