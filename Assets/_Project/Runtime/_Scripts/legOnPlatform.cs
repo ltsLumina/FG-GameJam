@@ -8,10 +8,14 @@ public class legOnPlatform : MonoBehaviour
     [SerializeField] private bool active;
     private LineRenderer myLine;
 
+    private CircleCollider2D _cc;
+
     private void Awake()
     {
         oldParent = transform.parent;
         myLine = GetComponent<LineRenderer>();
+
+        _cc = GetComponent<CircleCollider2D>();
 
     }
 
@@ -33,6 +37,14 @@ public class legOnPlatform : MonoBehaviour
         set
         {
             active = value;
+            if (active)
+            {
+                _cc.enabled = true;
+            }
+            else
+            {
+                _cc.enabled = false;
+            }
         }
     }
 
