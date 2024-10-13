@@ -363,6 +363,7 @@ public partial class Player : MonoBehaviour
             anim.SetTrigger("death");
             anim.GetComponent<Animator>().SetBool(IsDead, true);
 
+            playerInput.enabled = false;
             enabled = false;
             StopAllCoroutines();
 
