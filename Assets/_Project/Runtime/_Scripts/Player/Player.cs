@@ -336,14 +336,17 @@ public partial class Player : MonoBehaviour
         {
             case CauseOfDeath.Light:
                 PlayAnimation();
+                Logger.LogWarning("Player has died by light.");
                 break;
 
             case CauseOfDeath.Spikes:
                 PlayAnimation();
+                Logger.LogWarning("Player has died by spikes.");
                 break;
 
             case CauseOfDeath.Killplane:
                 SkipAnimation();
+                Logger.LogWarning("Player has fallen below the kill plane.");
                 break;
 
             case CauseOfDeath.Other:

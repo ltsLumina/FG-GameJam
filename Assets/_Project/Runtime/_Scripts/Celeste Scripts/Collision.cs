@@ -13,7 +13,6 @@ public class Collision : MonoBehaviour
     [SerializeField] bool onRightWall;
     [SerializeField] bool onLeftWall;
     [SerializeField] int wallFacing;
-    [SerializeField] bool onMovingPlatform;
 
     [Space]
     [Header("Collision")]
@@ -21,19 +20,16 @@ public class Collision : MonoBehaviour
     [SerializeField] Vector2 bottomOffset, rightOffset, leftOffset;
     [SerializeField] Color gizmoColour = Color.red;
 
-    LayerMask movingPlatformLayer;
-
     // Update is called once per frame
     void Update()
     {
-        onGround = Physics2D.OverlapCircle((Vector2) transform.position + bottomOffset, collisionRadius, groundLayer);
+        onGround = Physics2D.OverlapCircle((Vector2) transform.position + bottomOffset, collisionRadius, groundLayer | LayerMask.GetMask("Ignore Raycast"));
 
-        onWall = Physics2D.OverlapCircle((Vector2) transform.position + rightOffset, collisionRadius, groundLayer) || Physics2D.OverlapCircle((Vector2) transform.position + leftOffset, collisionRadius, groundLayer);
+        onWall = Physics2D.OverlapCircle((Vector2) transform.position + rightOffset, collisionRadius, groundLayer | LayerMask.GetMask("Ignore Raycast")) || Physics2D.OverlapCircle
+            ((Vector2) transform.position + leftOffset, collisionRadius, groundLayer | LayerMask.GetMask("Ignore Raycast"));
 
-        onRightWall = Physics2D.OverlapCircle((Vector2) transform.position + rightOffset, collisionRadius, groundLayer);
-        onLeftWall = Physics2D.OverlapCircle((Vector2) transform.position + leftOffset, collisionRadius, groundLayer);
-
-        onMovingPlatform = Physics2D.OverlapCircle((Vector2) transform.position + bottomOffset, collisionRadius, LayerMask.GetMask("movingPlatform"));
+        onRightWall = Physics2D.OverlapCircle((Vector2) transform.position + rightOffset, collisionRadius, groundLayer | LayerMask.GetMask("Ignore Raycast"));
+        onLeftWall = Physics2D.OverlapCircle((Vector2) transform.position + leftOffset, collisionRadius, groundLayer | LayerMask.GetMask("Ignore Raycast"));
 
         wallFacing = onRightWall ? -1 : 1;
     }
@@ -53,6 +49,5 @@ public class Collision : MonoBehaviour
     public bool OnRightWall => onRightWall;
     public bool OnLeftWall => onLeftWall;
     public int WallFacing => wallFacing;
-    public bool OnMovingPlatform => onMovingPlatform;
     #endregion
 }
