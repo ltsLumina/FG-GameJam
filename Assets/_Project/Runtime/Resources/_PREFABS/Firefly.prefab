@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2467874512848962456}
   - component: {fileID: 7299670082614878504}
   - component: {fileID: 1448064942241777916}
+  - component: {fileID: 7879675974440674900}
   m_Layer: 0
   m_Name: Firefly
   m_TagString: Untagged
@@ -180,5 +181,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f007716075342a489d769554a3b8b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _light: {fileID: 1825741607051217486}
   Speed: 3
   Radius: 1
+  _currrentState: 0
+--- !u!58 &7879675974440674900
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3395796976094215089}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.03125, y: 0.1875}
+  serializedVersion: 2
+  m_Radius: 0.3
