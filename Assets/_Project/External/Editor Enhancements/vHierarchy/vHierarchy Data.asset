@@ -736,11 +736,16 @@ MonoBehaviour:
     - goDatasByGlobalId:
         keys:
         - GlobalObjectId_V1-2-3d4d9142097e83c42acaf5c05500a6ba-1269028310-0
+        - GlobalObjectId_V1-2-3d4d9142097e83c42acaf5c05500a6ba-1517527078-0
         values:
         - iColor: 0
           icon: d_eyeDropper.sml
+        - iColor: 0
+          icon: d_eyeDropper.sml
       goDatasByInstanceId:
-        keys: 446c0d00
+        keys: 446c0d005a6c0d00
         values:
+        - iColor: 0
+          icon: d_eyeDropper.sml
         - iColor: 0
           icon: d_eyeDropper.sml
