@@ -42,7 +42,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725528977434876814}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -112,7 +112,6 @@ MonoBehaviour:
   FOV: 100
   legSpacing: 2
   sunLeg: {fileID: 5522967174724504027, guid: f37d75dbf527b0441936909e95157a96, type: 3}
-  legManager: {fileID: 1920709572289576455}
 --- !u!58 &7882939326796773723
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -274,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spiderBody: {fileID: 725528977434876814}
+  lookTowardsPlayer: 0
 --- !u!1 &8628919673443573131
 GameObject:
   m_ObjectHideFlags: 0

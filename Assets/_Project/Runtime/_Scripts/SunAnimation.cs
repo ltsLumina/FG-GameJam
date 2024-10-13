@@ -5,6 +5,8 @@ using UnityEngine;
 public class SunAnimation : MonoBehaviour
 {
 
+    [SerializeField] bool lookingAtPlayer;
+
     [SerializeField] LayerMask groundLayer;
 
     [SerializeField] LayerMask legLayer;
@@ -25,38 +27,48 @@ public class SunAnimation : MonoBehaviour
 
     [SerializeField] LineRenderer sunLeg;
 
-    [SerializeField] Transform legManager;
-
     private CircleCollider2D circleCol;
 
+    Vector3 velocity = Vector3.zero;
+
     Vector3 lastPos;
+
+    private Player player;
 
 
     private void Start()
     {
         circleCol = GetComponent<CircleCollider2D>();
 
+        var legManager = new GameObject("legManager");
+
         for(int i = 0; i < legAmount; i++)
         {
-            legs.Add(Instantiate(sunLeg, legManager));
+            legs.Add(Instantiate(sunLeg, legManager.transform));
             FindNewAnchor(legs[i]);
         }
+
+        transform.parent = legManager.transform;
+
+        player = FindObjectOfType<Player>();
 
     }
 
     private void FixedUpdate()
     {
 
-        Vector3 velocity;
+        if(transform.position != lastPos)
+        {
+            velocity = (transform.position - lastPos).normalized;
+        }
 
-        velocity = (transform.position - lastPos).normalized;
         lastPos = transform.position;
 
         circleCol.radius = legLenght + 1;
 
         var newAngle = -Vector3.SignedAngle(velocity, new Vector3(1,0,0), Vector3.forward);
 
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, newAngle));
+        //transform.rotation = Quaternion.Euler(new Vector3(0, 0, newAngle));
 
         for (int i = 0; i < rayAmount; i++)
         {
@@ -66,6 +78,8 @@ public class SunAnimation : MonoBehaviour
             Vector2 newDir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, newDir, legLenght, groundLayer);
+
+            Debug.DrawRay(transform.position, newDir, Color.green, 1);
 
             if (hit.collider != null)
             {
@@ -78,6 +92,11 @@ public class SunAnimation : MonoBehaviour
                     unusedLegs[0].gameObject.transform.position = hit.point;
                     unusedLegs.Remove(unusedLegs[0]);
                 }
+            }
+
+            if (lookingAtPlayer)
+            {
+                transform.right = player.transform.position - transform.position;
             }
 
         }
