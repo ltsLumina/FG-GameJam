@@ -1,5 +1,6 @@
 #region
 using System.Collections.Generic;
+using Lumina.Essentials.Attributes;
 using UnityEngine;
 #endregion
 
@@ -17,7 +18,7 @@ public class SunAnimation : MonoBehaviour
 
     [SerializeField] int rayAmount;
 
-    [SerializeField] List<LineRenderer> legs = new ();
+    [SerializeField] [ReadOnly] List<LineRenderer> legs = new ();
 
     [SerializeField] int FOV;
 
@@ -37,8 +38,6 @@ public class SunAnimation : MonoBehaviour
 
     private void Start()
     {
-        SelectAnimation();
-
         circleCol = GetComponent<CircleCollider2D>();
 
         var legManager = new GameObject("legManager");
@@ -64,6 +63,7 @@ public class SunAnimation : MonoBehaviour
 
         if (unusedLegs.Count > legAmount - 3) tempFOV = 360;
 
+        if (!circleCol) circleCol = GetComponent<CircleCollider2D>();
         circleCol.radius = legLenght + 1;
 
         float newAngle = -Vector3.SignedAngle(velocity, new (1, 0, 0), Vector3.forward);
@@ -137,10 +137,9 @@ public class SunAnimation : MonoBehaviour
         unusedLegs.Add(aLeg);
     }
 
-    void SelectAnimation()
+    void DisableAnim()
     {
-        string scene = SceneManagerExtended.ActiveSceneName;
         var anim = GetComponent<Animator>();
-        anim.SetTrigger(scene);
+        anim.enabled = false;
     }
 }

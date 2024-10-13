@@ -5,6 +5,7 @@ using Lumina.Essentials.Attributes;
 using TransitionsPlus;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 #endregion
 
 public partial class Player : MonoBehaviour
@@ -363,6 +364,9 @@ public partial class Player : MonoBehaviour
             anim.SetTrigger("death");
             anim.GetComponent<Animator>().SetBool(IsDead, true);
 
+            var backLight = GetComponentInChildren<Light2D>();
+            DOVirtual.Float(backLight.intensity, 0, 0.5f, x => backLight.intensity = x);
+
             playerInput.enabled = false;
             enabled = false;
             StopAllCoroutines();
@@ -370,22 +374,23 @@ public partial class Player : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
 
-            StartCoroutine(Delay());
+            DOVirtual.DelayedCall(0.35f, () => deathTransition.Play());
         }
 
         void SkipAnimation()
         {
             anim.GetComponent<Animator>().SetBool(IsDead, true);
+
+            var backLight = GetComponentInChildren<Light2D>();
+            DOVirtual.Float(backLight.intensity, 0, 0.5f, x => backLight.intensity = x);
+
+            playerInput.enabled = false;
             enabled = false;
             StopAllCoroutines();
+
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
-            deathTransition.Play();
-        }
 
-        IEnumerator Delay()
-        {
-            yield return new WaitForSeconds(.75f);
             deathTransition.Play();
         }
     }

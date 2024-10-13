@@ -1,8 +1,10 @@
 #region
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 #endregion
 
+[Obsolete("Use the new PlayerDetection script instead.")]
 public class Sunlight : MonoBehaviour
 {
     // Change this if you dont want the player to die on collision with the sunlight
