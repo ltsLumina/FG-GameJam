@@ -5,10 +5,13 @@ using UnityEngine;
 public class legOnPlatform : MonoBehaviour
 {
     private Transform oldParent;
+    [SerializeField] private bool active;
+    private LineRenderer myLine;
 
     private void Awake()
     {
         oldParent = transform.parent;
+        myLine = GetComponent<LineRenderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,10 +21,18 @@ public class legOnPlatform : MonoBehaviour
             transform.parent = collision.gameObject.transform;
         }
     }
-
-    private void OnEnable()
+    public void OldParent()
     {
         transform.parent = oldParent;
+    }
+
+    public bool Active
+    {
+        get => active;
+        set
+        {
+            active = value;
+        }
     }
 
 }
